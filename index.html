@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PolarWatch Analytics — SSW Detection & Prediction Engine</title>
+  <title>PolarWatch Analytics — Sudden Stratospheric Warming Prediction Engine</title>
   
-  <!-- Fonts -->
+  <!-- Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
-  <!-- KaTeX for Clean Math Rendering -->
+  <!-- KaTeX for Clean Mathematical Typesetting -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
@@ -18,445 +18,508 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-  <!-- Minimalist Console Stylesheet -->
+  <!-- Clean Professional Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-  <!-- Console Top Navigation Bar -->
-  <header class="console-nav">
-    <div class="container console-nav-inner">
-      <div class="console-brand">
-        <span class="brand-dot"></span>
-        <span class="brand-title-text">PolarWatch Analytics</span>
-        <span class="brand-meta">ERA5 10 hPa | 60°N–90°N</span>
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="container nav-wrapper">
+      <div class="nav-brand">
+        PolarWatch <span>Analytics</span>
+        <span class="nav-badge">ERA5 10 hPa Reanalysis</span>
       </div>
 
-      <ul class="console-links">
-        <li><a href="#formulation" class="console-link active">Formulation</a></li>
-        <li><a href="#dynamics" class="console-link">Dynamics</a></li>
-        <li><a href="#spatial" class="console-link">Spatial</a></li>
-        <li><a href="#inference" class="console-link">Inference</a></li>
-        <li><a href="#evaluation" class="console-link">Evaluation</a></li>
-      </ul>
+      <div class="tab-nav-bar">
+        <button class="tab-btn active" data-tab="tab-overview">Overview & Formulation</button>
+        <button class="tab-btn" data-tab="tab-timeseries">Time Series & Events</button>
+        <button class="tab-btn" data-tab="tab-spatial">Spatial Synoptic Maps</button>
+        <button class="tab-btn" data-tab="tab-features">Feature Ranking</button>
+        <button class="tab-btn" data-tab="tab-evaluation">Model Evaluation</button>
+        <button class="tab-btn" data-tab="tab-sandbox">Inference Sandbox</button>
+      </div>
+    </div>
+  </nav>
 
-      <div class="theme-switch-group">
-        <button class="theme-btn active" data-theme="theme-editorial">Editorial</button>
-        <button class="theme-btn" data-theme="theme-forest">Forest</button>
-        <button class="theme-btn" data-theme="theme-obsidian">Obsidian</button>
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="container">
+      <h1 class="page-title">
+        Sudden Stratospheric Warming Event Detection in the Northern Polar Region
+      </h1>
+      <p class="page-subtitle">
+        Machine Learning Framework for 10 hPa Northern Polar Circulation Reversals using Copernicus ERA5 Reanalysis
+      </p>
+
+      <!-- KPI Summary Cards -->
+      <div class="kpi-strip">
+        <div class="kpi-card">
+          <div class="kpi-label">LSTM ROC-AUC</div>
+          <div class="kpi-value" style="color: var(--accent-emerald);">0.909</div>
+          <div class="kpi-desc">Optimal discriminative capability</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">SSW Event Recall</div>
+          <div class="kpi-value" style="color: var(--accent-blue);">66.7%</div>
+          <div class="kpi-desc">14 of 21 test disturbance days detected</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Dataset Coverage</div>
+          <div class="kpi-value">727</div>
+          <div class="kpi-desc">Dec 2020 – Mar 2026 daily samples</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Sequence Window</div>
+          <div class="kpi-value" style="color: var(--accent-amber);">14 Days</div>
+          <div class="kpi-desc">Temporal atmospheric memory</div>
+        </div>
       </div>
     </div>
   </header>
 
-  <main class="container" style="padding-bottom: 2.5rem;">
+  <!-- Main Workspace Tabs -->
+  <main class="container" style="padding-top: 1.5rem; padding-bottom: 3rem;">
 
-    <!-- Telemetry Metric Strip -->
-    <div class="telemetry-strip">
-      <div class="telemetry-tile">
-        <span class="telemetry-label">LSTM ROC-AUC</span>
-        <span class="telemetry-val" style="color: var(--accent-emerald);">0.909</span>
-        <span class="telemetry-sub">Optimal class discrimination threshold</span>
-      </div>
-      <div class="telemetry-tile">
-        <span class="telemetry-label">SSW Event Recall</span>
-        <span class="telemetry-val" style="color: var(--accent-primary);">66.7%</span>
-        <span class="telemetry-sub">14 of 21 test disturbance days detected</span>
-      </div>
-      <div class="telemetry-tile">
-        <span class="telemetry-label">Temporal Observations</span>
-        <span class="telemetry-val">727</span>
-        <span class="telemetry-sub">Dec 2020 – Mar 2026 daily samples</span>
-      </div>
-      <div class="telemetry-tile">
-        <span class="telemetry-label">Sequence Memory</span>
-        <span class="telemetry-val" style="color: var(--accent-navy);">14 Days</span>
-        <span class="telemetry-sub">Rolling atmospheric history window</span>
+    <!-- TAB 1: Overview & Formulation -->
+    <div id="tab-overview" class="tab-content active">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Atmospheric Variables Formulation</h2>
+            <p class="card-subtitle">ECMWF ERA5 Pressure Levels Reanalysis at 10 hPa across 60°N–90°N Polar Cap</p>
+          </div>
+          <span class="pill pill-blue">Physical Equations</span>
+        </div>
+
+        <div class="formula-grid">
+          <div class="formula-box">
+            <div class="formula-title">Variable 1: Polar-Cap Geopotential Height</div>
+            <div class="formula-tex">
+              $$Z_{\text{polar}}(t) = \frac{1}{N} \sum_{i=1}^{N} Z_{10\,\text{hPa}}(i, t)$$
+            </div>
+            <p class="formula-desc">
+              Measures the gravitational potential of the atmosphere in m²/s². Captures the vertical geometry, mass distribution, and displacement of the polar vortex.
+            </p>
+          </div>
+
+          <div class="formula-box">
+            <div class="formula-title">Variable 2: Longitudinal Mean Zonal Wind (60°N)</div>
+            <div class="formula-tex">
+              $$\overline{U}_{60}(t) = \frac{1}{N_\lambda} \sum_{\lambda} U(60^\circ\text{N}, \lambda, t)$$
+            </div>
+            <p class="formula-desc">
+              East-west wind speed at latitude 60°N. Positive values denote standard westerly circumpolar flow; negative values ($U &lt; 0\text{ m/s}$) define the circulation reversal.
+            </p>
+          </div>
+
+          <div class="formula-box">
+            <div class="formula-title">Variable 3: Longitudinal Mean Meridional Wind</div>
+            <div class="formula-tex">
+              $$\overline{V}_{60}(t) = \frac{1}{N_\lambda} \sum_{\lambda} V(60^\circ\text{N}, \lambda, t)$$
+            </div>
+            <p class="formula-desc">
+              North-south wind velocity in m/s. Quantifies planetary wave breaking, meridional transport, and turbulent heat flux prior to vortex breakdown.
+            </p>
+          </div>
+
+          <div class="formula-box">
+            <div class="formula-title">Variable 4: Polar-Cap Mean Temperature</div>
+            <div class="formula-tex">
+              $$T_{\text{polar}}(t) = \frac{1}{N} \sum_{i=1}^{N} T_{10\,\text{hPa}}(i, t) - 273.15$$
+            </div>
+            <p class="formula-desc">
+              Average thermal state over 60°N–90°N converted to Celsius. During major warmings, polar-cap temperatures rise by 30°C to 50°C within days.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Main Asymmetric Workbench Cockpit Grid -->
-    <div class="workbench-grid">
-      
-      <!-- Left Column: Atmospheric Diagnostics & Fields -->
-      <div class="workbench-col">
-        
-        <!-- Panel 1: Atmospheric Variables Formulation -->
-        <section id="formulation" class="panel-box">
-          <div class="panel-header">
-            <span class="panel-title">Atmospheric Variables Formulation</span>
-            <span class="panel-meta">10 hPa Polar Cap Coordinates</span>
+    <!-- TAB 2: Time Series & Event Detections -->
+    <div id="tab-timeseries" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Polar Cap Dynamics & Event Detection Timeline</h2>
+            <p class="card-subtitle">10 hPa Mean Polar Temperature (2020–2026) with Charlton & Polvani (2007) Verified SSW Onset Dates</p>
           </div>
+          <span class="pill pill-green">Temporal Series</span>
+        </div>
 
-          <div class="eq-mini-grid">
-            <div class="eq-mini-card">
-              <span class="panel-meta">Variable 1: Geopotential (z)</span>
-              <div class="eq-math-clean">
-                $$Z_{\text{polar}}(t) = \frac{1}{N} \sum_{i=1}^{N} Z_{10\,\text{hPa}}(i, t)$$
-              </div>
-              <p class="eq-desc-clean">Gravitational potential of polar vortex mass structure.</p>
-            </div>
+        <div style="position: relative; height: 340px; width: 100%; margin-bottom: 1.5rem;">
+          <canvas id="tempTimeSeriesChart"></canvas>
+        </div>
 
-            <div class="eq-mini-card">
-              <span class="panel-meta">Variable 2: Zonal Wind (u)</span>
-              <div class="eq-math-clean">
-                $$\overline{U}_{60}(t) = \frac{1}{N_\lambda} \sum_{\lambda} U(60^\circ\text{N}, \lambda, t)$$
-              </div>
-              <p class="eq-desc-clean">East-west wind speed at 60°N. Reversal: U &lt; 0 m/s.</p>
-            </div>
-
-            <div class="eq-mini-card">
-              <span class="panel-meta">Variable 3: Meridional Wind (v)</span>
-              <div class="eq-math-clean">
-                $$\overline{V}_{60}(t) = \frac{1}{N_\lambda} \sum_{\lambda} V(60^\circ\text{N}, \lambda, t)$$
-              </div>
-              <p class="eq-desc-clean">North-south wave turbulence and planetary momentum flux.</p>
-            </div>
-
-            <div class="eq-mini-card">
-              <span class="panel-meta">Variable 4: Temperature (t)</span>
-              <div class="eq-math-clean">
-                $$T_{\text{polar}}(t) = \frac{1}{N} \sum_{i=1}^{N} T_{10\,\text{hPa}}(i, t) - 273.15$$
-              </div>
-              <p class="eq-desc-clean">Spatial mean thermal state across 60°N–90°N Arctic cap.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Panel 2: Polar Cap Dynamics & Charlton-Polvani Indexing -->
-        <section id="dynamics" class="panel-box">
-          <div class="panel-header">
-            <span class="panel-title">Polar Cap Dynamics & Detected Reversals</span>
-            <span class="panel-meta">Charlton & Polvani (2007) Criteria</span>
-          </div>
-
-          <div style="position: relative; height: 260px; width: 100%; margin-bottom: 1rem;">
-            <canvas id="tempTimeSeriesChart"></canvas>
-          </div>
-
-          <div style="overflow-x: auto;">
-            <table class="data-table-clean">
-              <thead>
-                <tr>
-                  <th>Event Date</th>
-                  <th>Classification</th>
-                  <th>Verification Status</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style="font-family: var(--font-mono);">2021-01-05</td>
-                  <td>Major SSW</td>
-                  <td><span class="pill-clean pill-green">Confirmed</span></td>
-                  <td>Vortex split; severe European freeze.</td>
-                </tr>
-                <tr>
-                  <td style="font-family: var(--font-mono);">2021-02-01</td>
-                  <td>Major SSW</td>
-                  <td><span class="pill-clean pill-green">Confirmed</span></td>
-                  <td>Prolonged displacement; North American cold outbreak.</td>
-                </tr>
-                <tr style="opacity: 0.6;">
-                  <td style="font-family: var(--font-mono);">2022-03-20</td>
-                  <td>Final Warming</td>
-                  <td><span class="pill-clean pill-rose">Filtered</span></td>
-                  <td>Springtime transition without 10-day westerly recovery.</td>
-                </tr>
-                <tr>
-                  <td style="font-family: var(--font-mono);">2023-02-16</td>
-                  <td>Major SSW</td>
-                  <td><span class="pill-clean pill-green">Confirmed</span></td>
-                  <td>Wave-2 warming event; circumpolar flow breakdown.</td>
-                </tr>
-                <tr>
-                  <td style="font-family: var(--font-mono);">2024-01-16</td>
-                  <td>Major SSW</td>
-                  <td><span class="pill-clean pill-green">Confirmed</span></td>
-                  <td>Teleconnection to prolonged North & NW India cold spell.</td>
-                </tr>
-                <tr>
-                  <td style="font-family: var(--font-mono);">2024-03-04</td>
-                  <td>Major SSW</td>
-                  <td><span class="pill-clean pill-green">Confirmed</span></td>
-                  <td>Late-winter polar jet displacement.</td>
-                </tr>
-                <tr style="opacity: 0.6;">
-                  <td style="font-family: var(--font-mono);">2025-03-09</td>
-                  <td>Final Warming</td>
-                  <td><span class="pill-clean pill-rose">Filtered</span></td>
-                  <td>Springtime transition without 10-day recovery.</td>
-                </tr>
-                <tr>
-                  <td style="font-family: var(--font-mono); font-weight: 700;">2026-03-04</td>
-                  <td>Major SSW</td>
-                  <td><span class="pill-clean pill-green">Case Study</span></td>
-                  <td>Deepest central Arctic U-wind reversal (-60 m/s).</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <!-- Panel 3: Synoptic Spatial Fields -->
-        <section id="spatial" class="panel-box">
-          <div class="panel-header">
-            <span class="panel-title">Synoptic Spatial Field Inspection</span>
-            <div style="display: flex; gap: 0.5rem;">
-              <select id="spatialVarSelect" class="select-minimal">
-                <option value="geopotential">Geopotential Height (m)</option>
-                <option value="u_wind">Zonal U-Wind (m/s)</option>
-                <option value="temperature">Temperature (K / °C)</option>
-                <option value="v_wind">Meridional V-Wind (m/s)</option>
-              </select>
-
-              <select id="spatialEventSelect" class="select-minimal">
-                <option value="2026-03-04">2026-03-04 (Case Study)</option>
-                <option value="2024-01-16">2024-01-16 (North India Event)</option>
-                <option value="2024-03-04">2024-03-04 (Late Split)</option>
-                <option value="2023-02-16">2023-02-16 (Wave-2 Event)</option>
-                <option value="2021-02-01">2021-02-01 (Texas Freeze)</option>
-                <option value="2021-01-05">2021-01-05 (Storm Filomena)</option>
-              </select>
-            </div>
-          </div>
-
-          <div style="background: #000; border-radius: var(--radius-sm); border: 1px solid var(--border-light); padding: 0.4rem; text-align: center;">
-            <img id="spatialMapImg" src="assets/images/map_geopotential_2026-03-04.png" alt="Spatial Map" style="width: 100%; max-height: 380px; object-fit: contain;">
-          </div>
-          <p id="spatialMapCaption" style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.65rem;">
-            Geopotential Height (m) — Tracks polar vortex mass restructuring and displacement. 15 days before, onset day (2026-03-04), and 15 days after. Source: ECMWF ERA5 (10 hPa).
-          </p>
-        </section>
-
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Event Date</th>
+                <th>Classification</th>
+                <th>Verification Criteria</th>
+                <th>Status</th>
+                <th>Synoptic Observation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-family: var(--font-mono); font-weight: 600;">2021-01-05</td>
+                <td>Major SSW</td>
+                <td>Charlton-Polvani Reversal + Recovery &ge; 10d</td>
+                <td><span class="pill pill-green">Confirmed</span></td>
+                <td>Circumpolar vortex split into dual lobes; extreme European freeze.</td>
+              </tr>
+              <tr>
+                <td style="font-family: var(--font-mono); font-weight: 600;">2021-02-01</td>
+                <td>Major SSW</td>
+                <td>Charlton-Polvani Reversal + Recovery &ge; 10d</td>
+                <td><span class="pill pill-green">Confirmed</span></td>
+                <td>Prolonged vortex displacement; North American polar outbreak.</td>
+              </tr>
+              <tr style="opacity: 0.6;">
+                <td style="font-family: var(--font-mono); font-weight: 600;">2022-03-20</td>
+                <td>Final Warming</td>
+                <td>Failed 10-day westerly recovery before April 30</td>
+                <td><span class="pill pill-rose">Filtered</span></td>
+                <td>Seasonal spring transition; correctly excluded from dataset.</td>
+              </tr>
+              <tr>
+                <td style="font-family: var(--font-mono); font-weight: 600;">2023-02-16</td>
+                <td>Major SSW</td>
+                <td>Charlton-Polvani Reversal + Recovery &ge; 10d</td>
+                <td><span class="pill pill-green">Confirmed</span></td>
+                <td>Wave-2 warming event; circumpolar westerly collapse.</td>
+              </tr>
+              <tr>
+                <td style="font-family: var(--font-mono); font-weight: 600;">2024-01-16</td>
+                <td>Major SSW</td>
+                <td>Charlton-Polvani Reversal + Recovery &ge; 10d</td>
+                <td><span class="pill pill-green">Confirmed</span></td>
+                <td>Teleconnection to prolonged North & Northwest India cold wave.</td>
+              </tr>
+              <tr>
+                <td style="font-family: var(--font-mono); font-weight: 600;">2024-03-04</td>
+                <td>Major SSW</td>
+                <td>Charlton-Polvani Reversal + Recovery &ge; 10d</td>
+                <td><span class="pill pill-green">Confirmed</span></td>
+                <td>Late-winter polar jet stream displacement.</td>
+              </tr>
+              <tr style="opacity: 0.6;">
+                <td style="font-family: var(--font-mono); font-weight: 600;">2025-03-09</td>
+                <td>Final Warming</td>
+                <td>Failed 10-day westerly recovery before April 30</td>
+                <td><span class="pill pill-rose">Filtered</span></td>
+                <td>Spring seasonal breakdown without winter westerly recovery.</td>
+              </tr>
+              <tr>
+                <td style="font-family: var(--font-mono); font-weight: 700; color: var(--accent-blue);">2026-03-04</td>
+                <td>Major SSW</td>
+                <td>Charlton-Polvani Reversal + Recovery &ge; 10d</td>
+                <td><span class="pill pill-blue">Case Study</span></td>
+                <td>Deep central Arctic U-wind reversal to -60 m/s with +48°C warming.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+    </div>
 
-      <!-- Right Column: Interactive Inference Sandbox & Feature Weights -->
-      <div class="workbench-col">
-        
-        <!-- Panel 4: Live Inference Sandbox -->
-        <section id="inference" class="panel-box">
-          <div class="panel-header">
-            <span class="panel-title">Model Inference Sandbox</span>
-            <span class="panel-meta">Interactive Calibrated Engine</span>
+    <!-- TAB 3: Spatial Synoptic Maps -->
+    <div id="tab-spatial" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Synoptic Spatial Field Inspection</h2>
+            <p class="card-subtitle">Before (-15d), Onset Day, and After (+15d) Polar Stereographic Distributions</p>
+          </div>
+          
+          <div style="display: flex; gap: 0.65rem;">
+            <select id="spatialVarSelect" class="control-select">
+              <option value="geopotential">Geopotential Height (m)</option>
+              <option value="u_wind">Zonal U-Wind (m/s)</option>
+              <option value="temperature">Temperature (K / °C)</option>
+              <option value="v_wind">Meridional V-Wind (m/s)</option>
+            </select>
+
+            <select id="spatialEventSelect" class="control-select">
+              <option value="2026-03-04">2026-03-04 (Primary Case Study)</option>
+              <option value="2024-01-16">2024-01-16 (North India Cold Wave)</option>
+              <option value="2024-03-04">2024-03-04 (Late-Winter Split)</option>
+              <option value="2023-02-16">2023-02-16 (Wave-2 Major SSW)</option>
+              <option value="2021-02-01">2021-02-01 (Texas Cold Outbreak)</option>
+              <option value="2021-01-05">2021-01-05 (Storm Filomena Event)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="background: #000000; border-radius: var(--radius-sm); border: 1px solid var(--border); padding: 0.75rem; text-align: center; margin-bottom: 1rem;">
+          <img id="spatialMapImg" src="assets/images/map_geopotential_2026-03-04.png" alt="Spatial Contour Map" style="width: 100%; max-height: 480px; object-fit: contain;">
+        </div>
+
+        <p id="spatialMapCaption" style="font-size: 0.88rem; color: var(--text-body); line-height: 1.5;">
+          <strong>Geopotential Height (m) — Polar vortex structure and mass displacement.</strong> 15 days before onset, during event onset (2026-03-04), and 15 days after. Source: ECMWF ERA5 (10 hPa).
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 4: Feature Importance Ranking -->
+    <div id="tab-features" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Random Forest Feature Importance Ranking</h2>
+            <p class="card-subtitle">Gini Impurity Importance Scores Across 15 Leak-Free Atmospheric Predictors</p>
+          </div>
+          <span class="pill pill-amber">Feature Weights</span>
+        </div>
+
+        <div style="position: relative; height: 420px; width: 100%; margin-bottom: 1.25rem;">
+          <canvas id="featureImportanceChart"></canvas>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; font-size: 0.82rem;">
+          <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+            <strong style="color: var(--accent-blue); display: block; margin-bottom: 0.25rem;">1. Geopotential Dominance</strong>
+            <span><code>Geopotential_lag3</code> (0.140) and <code>Geopotential_roll7_mean</code> (0.114) lead. Structural mass and pressure shifts precede thermal peaks.</span>
           </div>
 
-          <!-- Output Readout -->
-          <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 1.15rem; text-align: center; margin-bottom: 1.25rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <span class="telemetry-label">Predicted Probability</span>
-              <span id="sbStatusPill" class="pill-clean pill-rose">HIGH RISK: POLAR BREAKDOWN LIKELY</span>
+          <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+            <strong style="color: var(--accent-rose); display: block; margin-bottom: 0.25rem;">2. Temperature Volatility</strong>
+            <span><code>Temperature_roll7_std</code> (0.122) outranks raw temperature (0.057). Accelerated rate of heating is 2.1x more predictive than baseline temperature.</span>
+          </div>
+
+          <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+            <strong style="color: var(--text-main); display: block; margin-bottom: 0.25rem;">3. Wave Momentum Flux</strong>
+            <span><code>V_Wind_roll7_std</code> (0.084) tracks planetary wave breaking entering the stratosphere prior to circulation breakdown.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5: Model Performance & Held-Out Evaluation -->
+    <div id="tab-evaluation" class="tab-content">
+      <!-- Benchmark Table -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Model Performance Benchmark Matrix</h2>
+            <p class="card-subtitle">Held-Out Test Set Performance (Chronological 70/15/15 Split, 2025/2026 Season)</p>
+          </div>
+          <span class="pill pill-green">Test Set Metrics</span>
+        </div>
+
+        <div class="table-responsive" style="margin-bottom: 1.5rem;">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Model Architecture</th>
+                <th>Accuracy</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>F1-Score</th>
+                <th>ROC-AUC</th>
+                <th>Designation</th>
+                <th>Summary of Findings</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600; color: var(--accent-blue);">Random Forest (300 Trees)</td>
+                <td style="font-family: var(--font-mono); font-weight: 700;">0.824</td>
+                <td style="font-family: var(--font-mono);">0.385</td>
+                <td style="font-family: var(--font-mono); color: var(--accent-rose);">0.238</td>
+                <td style="font-family: var(--font-mono);">0.294</td>
+                <td style="font-family: var(--font-mono);">0.689</td>
+                <td><span class="pill pill-blue">Ensemble</span></td>
+                <td>High accuracy on calm days; fails on minority event class (misses 76% of SSWs).</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600; color: var(--accent-amber);">Linear Regression</td>
+                <td style="font-family: var(--font-mono);">0.485</td>
+                <td style="font-family: var(--font-mono); color: var(--accent-rose);">0.173</td>
+                <td style="font-family: var(--font-mono);">0.378</td>
+                <td style="font-family: var(--font-mono);">0.271</td>
+                <td style="font-family: var(--font-mono);">0.594</td>
+                <td><span class="pill pill-amber">Baseline</span></td>
+                <td>Linear decision boundary fails rare-event classification; produces 62 false alarms.</td>
+              </tr>
+              <tr style="background: var(--accent-emerald-subtle);">
+                <td style="font-weight: 700; color: var(--accent-emerald);">LSTM Sequence (14-day Seq)</td>
+                <td style="font-family: var(--font-mono); font-weight: 700;">0.779</td>
+                <td style="font-family: var(--font-mono); font-weight: 700;">0.378</td>
+                <td style="font-family: var(--font-mono); font-weight: 800; color: var(--accent-emerald);">0.667</td>
+                <td style="font-family: var(--font-mono); font-weight: 800; color: var(--accent-emerald);">0.483</td>
+                <td style="font-family: var(--font-mono); font-weight: 800; color: var(--accent-emerald);">0.909</td>
+                <td><span class="pill pill-green">Optimal Model</span></td>
+                <td><strong>Best Performance:</strong> 2.8x higher recall than RF; superior discrimination (AUC 0.909).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Comparative Charts -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+          <div>
+            <div class="card-title" style="font-size: 0.92rem; margin-bottom: 0.75rem;">Metric Comparison Across Architectures</div>
+            <div style="position: relative; height: 280px; width: 100%;">
+              <canvas id="modelComparisonBarChart"></canvas>
+            </div>
+          </div>
+
+          <div>
+            <div class="card-title" style="font-size: 0.92rem; margin-bottom: 0.75rem;">ROC Curves Comparison</div>
+            <div style="position: relative; height: 280px; width: 100%;">
+              <canvas id="rocCurvesChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confusion Matrices -->
+        <div style="margin-bottom: 1.5rem;">
+          <div class="card-title" style="font-size: 0.92rem; margin-bottom: 0.75rem;">Confusion Matrix Error Analysis</div>
+          <div class="cm-grid">
+            <div class="cm-card">
+              <strong style="color: var(--accent-blue); font-size: 0.88rem;">Random Forest</strong>
+              <table class="cm-table">
+                <tr>
+                  <td class="cm-cell cell-tn">107<br><span style="font-size: 0.65rem; font-weight: 400;">TN</span></td>
+                  <td class="cm-cell cell-fp">8<br><span style="font-size: 0.65rem; font-weight: 400;">FP</span></td>
+                </tr>
+                <tr>
+                  <td class="cm-cell cell-fn">16<br><span style="font-size: 0.65rem; font-weight: 400;">FN</span></td>
+                  <td class="cm-cell cell-tp">5<br><span style="font-size: 0.65rem; font-weight: 400;">TP</span></td>
+                </tr>
+              </table>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Misses 16 of 21 SSWs (76% False Negative Rate).</span>
             </div>
 
-            <div style="font-size: 3rem; font-weight: 800; font-family: var(--font-mono); line-height: 1; margin: 0.35rem 0;">
+            <div class="cm-card">
+              <strong style="color: var(--accent-amber); font-size: 0.88rem;">Linear Regression</strong>
+              <table class="cm-table">
+                <tr>
+                  <td class="cm-cell cell-tn">53<br><span style="font-size: 0.65rem; font-weight: 400;">TN</span></td>
+                  <td class="cm-cell cell-fp">62<br><span style="font-size: 0.65rem; font-weight: 400;">FP</span></td>
+                </tr>
+                <tr>
+                  <td class="cm-cell cell-fn">8<br><span style="font-size: 0.65rem; font-weight: 400;">FN</span></td>
+                  <td class="cm-cell cell-tp">13<br><span style="font-size: 0.65rem; font-weight: 400;">TP</span></td>
+                </tr>
+              </table>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">High false alarms (62 FP); precision of 0.173.</span>
+            </div>
+
+            <div class="cm-card" style="border-color: rgba(5, 150, 105, 0.4);">
+              <strong style="color: var(--accent-emerald); font-size: 0.88rem;">LSTM Sequence</strong>
+              <table class="cm-table">
+                <tr>
+                  <td class="cm-cell cell-tn">92<br><span style="font-size: 0.65rem; font-weight: 400;">TN</span></td>
+                  <td class="cm-cell cell-fp">23<br><span style="font-size: 0.65rem; font-weight: 400;">FP</span></td>
+                </tr>
+                <tr>
+                  <td class="cm-cell cell-fn">7<br><span style="font-size: 0.65rem; font-weight: 400;">FN</span></td>
+                  <td class="cm-cell cell-tp">14<br><span style="font-size: 0.65rem; font-weight: 400;">TP</span></td>
+                </tr>
+              </table>
+              <span style="font-size: 0.75rem; color: var(--accent-emerald);">Detects 14 of 21 SSWs with balanced precision.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Training Loss Progression -->
+        <div>
+          <div class="card-title" style="font-size: 0.92rem; margin-bottom: 0.5rem;">LSTM Training Dynamics & Early Stopping</div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+            Binary cross-entropy loss across epochs. Early stopping with patience=10 restored optimal weights from Epoch 2 (val_loss = 0.6121).
+          </p>
+          <div style="position: relative; height: 240px; width: 100%;">
+            <canvas id="lstmLossChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 6: Model Inference Sandbox -->
+    <div id="tab-sandbox" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Live Model Inference Sandbox</h2>
+            <p class="card-subtitle">Simulate Atmospheric Perturbations and Observe Calibrated Real-Time Predictions</p>
+          </div>
+          <span class="pill pill-blue">Interactive Playground</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2rem; align-items: center;">
+          <!-- Controls -->
+          <div>
+            <div style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.35rem; font-family: var(--font-mono);">
+                <span>Geopotential Height Anomaly:</span>
+                <strong id="sbGeoVal" style="color: var(--accent-blue);">+150 m²/s²</strong>
+              </div>
+              <input type="range" id="sbGeo" class="range-slider" min="-300" max="600" value="150" step="10">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Vortex mass deformation and anticyclonic swelling</span>
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.35rem; font-family: var(--font-mono);">
+                <span>Polar Cap Temperature Anomaly:</span>
+                <strong id="sbTempVal" style="color: var(--accent-rose);">+18°C</strong>
+              </div>
+              <input type="range" id="sbTemp" class="range-slider" min="-15" max="45" value="18" step="1">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Thermal spike above winter baseline (-70°C)</span>
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.35rem; font-family: var(--font-mono);">
+                <span>7-Day Temp Volatility (Std Dev):</span>
+                <strong id="sbTempStdVal" style="color: var(--accent-amber);">5.2°C</strong>
+              </div>
+              <input type="range" id="sbTempStd" class="range-slider" min="0.5" max="15.0" value="5.2" step="0.5">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Short-term temperature fluctuation rate</span>
+            </div>
+
+            <div style="margin-bottom: 0.5rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.35rem; font-family: var(--font-mono);">
+                <span>Meridional Wind Shear (V-Wind):</span>
+                <strong id="sbVWindVal" style="color: #7c3aed;">6.5 m/s</strong>
+              </div>
+              <input type="range" id="sbVWind" class="range-slider" min="-15" max="15" value="6.5" step="0.5">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Planetary wave energy entering latitude 60°N</span>
+            </div>
+          </div>
+
+          <!-- Real-Time Output -->
+          <div style="background: var(--bg-card-subtle); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1.5rem; text-align: center;">
+            <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.04em;">Calculated SSW Probability</span>
+
+            <div style="font-size: 3.5rem; font-weight: 800; font-family: var(--font-mono); margin: 0.4rem 0 0.2rem; color: var(--text-main);">
               <span id="sbProbText">78%</span>
             </div>
 
-            <div style="width: 100%; height: 6px; background: var(--border-light); border-radius: var(--radius-full); overflow: hidden; margin: 0.85rem 0;">
-              <div id="sbProbBar" style="width: 78%; height: 100%; background: var(--accent-primary); transition: all 0.2s ease;"></div>
+            <div style="margin-bottom: 1rem;">
+              <span id="sbStatusPill" class="pill pill-rose">HIGH RISK: POLAR BREAKDOWN LIKELY</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.75rem; text-align: left;">
-              <div style="background: var(--bg-card); padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
-                <span class="telemetry-label" style="display: block;">Random Forest</span>
-                <strong id="sbRfProb" style="color: var(--accent-navy); font-family: var(--font-mono); font-size: 0.9rem;">45%</strong>
-              </div>
-              <div style="background: var(--bg-card); padding: 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
-                <span class="telemetry-label" style="display: block;">Forecast Lead</span>
-                <strong style="color: var(--accent-amber); font-family: var(--font-mono); font-size: 0.9rem;">7 – 14 Days</strong>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sliders -->
-          <div>
-            <div class="slider-unit">
-              <div class="slider-top">
-                <span style="color: var(--text-secondary);">Geopotential Anomaly</span>
-                <strong id="sbGeoVal" style="color: var(--accent-primary);">+150 m²/s²</strong>
-              </div>
-              <input type="range" id="sbGeo" class="range-minimal" min="-300" max="600" value="150" step="10">
+            <div style="width: 100%; height: 6px; background: var(--border); border-radius: var(--radius-full); overflow: hidden; margin-bottom: 1.25rem;">
+              <div id="sbProbBar" style="width: 78%; height: 100%; background: #dc2626; transition: all 0.2s ease;"></div>
             </div>
 
-            <div class="slider-unit">
-              <div class="slider-top">
-                <span style="color: var(--text-secondary);">Polar Cap Temp Anomaly</span>
-                <strong id="sbTempVal" style="color: var(--accent-rose);">+18°C</strong>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.78rem; text-align: left;">
+              <div style="background: #ffffff; padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">Random Forest</span>
+                <strong id="sbRfProb" style="color: var(--accent-blue); font-family: var(--font-mono); font-size: 1rem;">45%</strong>
               </div>
-              <input type="range" id="sbTemp" class="range-minimal" min="-15" max="45" value="18" step="1">
-            </div>
-
-            <div class="slider-unit">
-              <div class="slider-top">
-                <span style="color: var(--text-secondary);">7-Day Temp Volatility (Std)</span>
-                <strong id="sbTempStdVal" style="color: var(--accent-amber);">5.2°C</strong>
+              <div style="background: #ffffff; padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+                <span style="color: var(--text-muted); font-size: 0.7rem; display: block;">Forecast Lead</span>
+                <strong style="color: var(--accent-amber); font-family: var(--font-mono); font-size: 1rem;">7 – 14 Days</strong>
               </div>
-              <input type="range" id="sbTempStd" class="range-minimal" min="0.5" max="15.0" value="5.2" step="0.5">
-            </div>
-
-            <div class="slider-unit">
-              <div class="slider-top">
-                <span style="color: var(--text-secondary);">Meridional Wind Shear (V-Wind)</span>
-                <strong id="sbVWindVal" style="color: var(--accent-navy);">6.5 m/s</strong>
-              </div>
-              <input type="range" id="sbVWind" class="range-minimal" min="-15" max="15" value="6.5" step="0.5">
             </div>
           </div>
-        </section>
-
-        <!-- Panel 5: Feature Importance Ranking -->
-        <section class="panel-box">
-          <div class="panel-header">
-            <span class="panel-title">Feature Importance Ranking</span>
-            <span class="panel-meta">15 Leak-Free Features</span>
-          </div>
-
-          <div style="position: relative; height: 350px; width: 100%;">
-            <canvas id="featureImportanceChart"></canvas>
-          </div>
-
-          <div style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.4;">
-            <p><strong>Top Predictors:</strong> <code>Geopotential_lag3</code> (0.140) and <code>Temperature_roll7_std</code> (0.122) lead the ranking. Pressure geometry and short-term temperature volatility dominate over raw single-day observations.</p>
-          </div>
-        </section>
-
+        </div>
       </div>
-
     </div>
-
-    <!-- Full-Width Evaluation Suite -->
-    <section id="evaluation" class="panel-box">
-      <div class="panel-header">
-        <span class="panel-title">Model Performance & Held-Out Test Evaluation</span>
-        <span class="panel-meta">Chronological 70/15/15 Split (2025/2026 Test Interval)</span>
-      </div>
-
-      <!-- Table 3 -->
-      <div style="overflow-x: auto; margin-bottom: 1.25rem;">
-        <table class="data-table-clean">
-          <thead>
-            <tr>
-              <th>Model Architecture</th>
-              <th>Accuracy</th>
-              <th>Precision</th>
-              <th>Recall</th>
-              <th>F1-Score</th>
-              <th>ROC-AUC</th>
-              <th>Status</th>
-              <th>Evaluation Findings</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="font-weight: 600; color: var(--accent-navy);">Random Forest</td>
-              <td style="font-family: var(--font-mono);">0.824</td>
-              <td style="font-family: var(--font-mono);">0.385</td>
-              <td style="font-family: var(--font-mono); color: var(--accent-rose);">0.238</td>
-              <td style="font-family: var(--font-mono);">0.294</td>
-              <td style="font-family: var(--font-mono);">0.689</td>
-              <td><span class="pill-clean pill-navy">Ensemble Baseline</span></td>
-              <td style="font-size: 0.78rem;">High accuracy on calm days; misses 76% of rare SSW events.</td>
-            </tr>
-            <tr>
-              <td style="font-weight: 600; color: var(--accent-amber);">Linear Regression</td>
-              <td style="font-family: var(--font-mono);">0.485</td>
-              <td style="font-family: var(--font-mono); color: var(--accent-rose);">0.173</td>
-              <td style="font-family: var(--font-mono);">0.378</td>
-              <td style="font-family: var(--font-mono);">0.271</td>
-              <td style="font-family: var(--font-mono);">0.594</td>
-              <td><span class="pill-clean pill-amber">Linear Baseline</span></td>
-              <td style="font-size: 0.78rem;">Fails binary threshold; yields 62 false alarms on held-out test data.</td>
-            </tr>
-            <tr style="background: var(--accent-emerald-subtle);">
-              <td style="font-weight: 700; color: var(--accent-emerald);">LSTM Sequence</td>
-              <td style="font-family: var(--font-mono); font-weight: 700;">0.779</td>
-              <td style="font-family: var(--font-mono); font-weight: 700;">0.378</td>
-              <td style="font-family: var(--font-mono); font-weight: 700; color: var(--accent-emerald);">0.667</td>
-              <td style="font-family: var(--font-mono); font-weight: 700; color: var(--accent-emerald);">0.483</td>
-              <td style="font-family: var(--font-mono); font-weight: 700; color: var(--accent-emerald);">0.909</td>
-              <td><span class="pill-clean pill-green">Optimal Model</span></td>
-              <td style="font-size: 0.78rem; color: var(--text-primary);">2.8x higher recall than RF; superior discrimination (AUC 0.909).</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Side-by-Side Diagnostic Charts -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
-        <div>
-          <span class="panel-meta" style="display: block; margin-bottom: 0.5rem; text-transform: uppercase;">Metric Comparison Across Architectures</span>
-          <div style="position: relative; height: 260px; width: 100%;">
-            <canvas id="modelComparisonBarChart"></canvas>
-          </div>
-        </div>
-        <div>
-          <span class="panel-meta" style="display: block; margin-bottom: 0.5rem; text-transform: uppercase;">ROC Curve Discrimination (Overlaid)</span>
-          <div style="position: relative; height: 260px; width: 100%;">
-            <canvas id="rocCurvesChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <!-- Confusion Matrices Grid -->
-      <div style="margin-bottom: 1.25rem;">
-        <span class="panel-meta" style="display: block; margin-bottom: 0.5rem; text-transform: uppercase;">Held-Out Confusion Matrix Diagnostics</span>
-        <div class="cm-minimal-grid">
-          
-          <div class="cm-box-clean">
-            <span class="telemetry-label" style="display: block; margin-bottom: 0.35rem;">Random Forest</span>
-            <table class="cm-table-clean">
-              <tr>
-                <td class="cm-cell-data cell-tn">107<br><span style="font-size: 0.6rem; font-weight: 400;">TN</span></td>
-                <td class="cm-cell-data cell-fp">8<br><span style="font-size: 0.6rem; font-weight: 400;">FP</span></td>
-              </tr>
-              <tr>
-                <td class="cm-cell-data cell-fn">16<br><span style="font-size: 0.6rem; font-weight: 400;">FN</span></td>
-                <td class="cm-cell-data cell-tp">5<br><span style="font-size: 0.6rem; font-weight: 400;">TP</span></td>
-              </tr>
-            </table>
-            <span class="panel-meta">Misses 16 of 21 SSWs (76% False Negative Rate).</span>
-          </div>
-
-          <div class="cm-box-clean">
-            <span class="telemetry-label" style="display: block; margin-bottom: 0.35rem;">Linear Regression</span>
-            <table class="cm-table-clean">
-              <tr>
-                <td class="cm-cell-data cell-tn">53<br><span style="font-size: 0.6rem; font-weight: 400;">TN</span></td>
-                <td class="cm-cell-data cell-fp">62<br><span style="font-size: 0.6rem; font-weight: 400;">FP</span></td>
-              </tr>
-              <tr>
-                <td class="cm-cell-data cell-fn">8<br><span style="font-size: 0.6rem; font-weight: 400;">FN</span></td>
-                <td class="cm-cell-data cell-tp">13<br><span style="font-size: 0.6rem; font-weight: 400;">TP</span></td>
-              </tr>
-            </table>
-            <span class="panel-meta">Excessive false positives (62 FP); precision of 0.173.</span>
-          </div>
-
-          <div class="cm-box-clean" style="border-color: rgba(21, 128, 61, 0.4);">
-            <span class="telemetry-label" style="display: block; margin-bottom: 0.35rem; color: var(--accent-emerald);">LSTM Sequence</span>
-            <table class="cm-table-clean">
-              <tr>
-                <td class="cm-cell-data cell-tn">92<br><span style="font-size: 0.6rem; font-weight: 400;">TN</span></td>
-                <td class="cm-cell-data cell-fp">23<br><span style="font-size: 0.6rem; font-weight: 400;">FP</span></td>
-              </tr>
-              <tr>
-                <td class="cm-cell-data cell-fn">7<br><span style="font-size: 0.6rem; font-weight: 400;">FN</span></td>
-                <td class="cm-cell-data cell-tp">14<br><span style="font-size: 0.6rem; font-weight: 400;">TP</span></td>
-              </tr>
-            </table>
-            <span class="panel-meta" style="color: var(--accent-emerald);">Catches 14 of 21 SSWs with balanced suppression.</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Training Loss Progression -->
-      <div>
-        <span class="panel-meta" style="display: block; margin-bottom: 0.5rem; text-transform: uppercase;">LSTM Binary Cross-Entropy Loss (Early Stopping Restored Epoch 2)</span>
-        <div style="position: relative; height: 210px; width: 100%;">
-          <canvas id="lstmLossChart"></canvas>
-        </div>
-      </div>
-    </section>
 
   </main>
 
@@ -464,11 +527,11 @@
   <footer>
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
       <div>
-        <strong style="color: var(--text-primary); font-family: var(--font-mono);">POLARWATCH ANALYTICS</strong>
-        <span style="margin-left: 0.5rem; color: var(--text-muted);">Copernicus ERA5 Pressure Levels Reanalysis (10 hPa)</span>
+        <strong style="color: var(--text-main);">PolarWatch Analytics</strong>
+        <span style="margin-left: 0.5rem;">Copernicus ECMWF ERA5 Pressure Levels Reanalysis (10 hPa)</span>
       </div>
-      <div style="font-family: var(--font-mono); font-size: 0.72rem;">
-        STATUS: ONLINE | PORT 8080 | REPO: SSW-Project
+      <div style="font-family: var(--font-mono);">
+        Pimpri Chinchwad College of Engineering (PCCOE), Pune
       </div>
     </div>
   </footer>
