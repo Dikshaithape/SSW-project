@@ -1,7 +1,6 @@
 /**
- * PolarWatch AI — Scientific Analytics Engine & Interactive Charts
- * Team CipheI / PCCOE Pune
- * Tanmay Joshi (125B1C170)
+ * PolarWatch Analytics — Scientific Engine & Interactive Charts
+ * Clean Minimalist Prototype / Hackathon Dashboard
  */
 
 let tempChartInstance = null;
@@ -16,11 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  // Set default Chart.js font & color
+  // Set default Chart.js styling
   Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
   Chart.defaults.color = "#78716c";
 
-  // Initialize all charts
+  // Initialize charts
   initTemperatureChart();
   initFeatureImportanceChart();
   initModelComparisonChart();
@@ -47,18 +46,18 @@ function initTemperatureChart() {
       labels: labels,
       datasets: [
         {
-          label: "Polar Cap Temperature at 10 hPa (°C)",
+          label: "10 hPa Polar Cap Mean Temperature (°C)",
           data: temps,
-          borderColor: "#c2410c", // Terracotta
+          borderColor: "#c2410c",
           backgroundColor: "rgba(194, 65, 12, 0.08)",
           borderWidth: 2,
           fill: true,
           tension: 0.25,
-          pointRadius: dataPoints.map(d => d.isEvent ? 6 : (d.isExcluded ? 5 : 2)),
+          pointRadius: dataPoints.map(d => d.isEvent ? 5 : (d.isExcluded ? 4 : 1.5)),
           pointBackgroundColor: dataPoints.map(d => d.isEvent ? "#be123c" : (d.isExcluded ? "#b45309" : "#c2410c")),
           pointBorderColor: "#ffffff",
           pointBorderWidth: dataPoints.map(d => (d.isEvent || d.isExcluded) ? 1.5 : 0),
-          pointHoverRadius: 8
+          pointHoverRadius: 7
         }
       ]
     },
@@ -66,7 +65,7 @@ function initTemperatureChart() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { boxWidth: 14 } },
+        legend: { labels: { boxWidth: 12 } },
         tooltip: {
           callbacks: {
             label: function(context) {
@@ -80,11 +79,12 @@ function initTemperatureChart() {
       },
       scales: {
         x: {
-          ticks: { maxTicksLimit: 12 },
+          ticks: { maxTicksLimit: 10, font: { size: 10 } },
           grid: { color: "rgba(120, 113, 108, 0.12)" }
         },
         y: {
-          title: { display: true, text: "Temperature (°C)" },
+          title: { display: true, text: "Temperature (°C)", font: { size: 11 } },
+          ticks: { font: { size: 10 } },
           grid: { color: "rgba(120, 113, 108, 0.12)" }
         }
       }
@@ -101,9 +101,9 @@ function initFeatureImportanceChart() {
   const labels = features.map(f => f.feature);
   const values = features.map(f => f.importance);
   const colors = features.map(f => {
-    if (f.category === "Geopotential") return "#c2410c"; // Terracotta
-    if (f.category === "Temperature") return "#be123c";  // Crimson
-    return "#1e3a8a";                                    // Navy
+    if (f.category === "Geopotential") return "#c2410c";
+    if (f.category === "Temperature") return "#be123c";
+    return "#1e3a8a";
   });
 
   if (featureChartInstance) featureChartInstance.destroy();
@@ -114,10 +114,10 @@ function initFeatureImportanceChart() {
       labels: labels,
       datasets: [
         {
-          label: "Importance Score",
+          label: "Gini Importance Score",
           data: values,
           backgroundColor: colors,
-          borderRadius: 4
+          borderRadius: 3
         }
       ]
     },
@@ -131,17 +131,19 @@ function initFeatureImportanceChart() {
           callbacks: {
             afterLabel: function(context) {
               const item = features[context.dataIndex];
-              return `Type: ${item.category}\nMeaning: ${item.desc}`;
+              return `Type: ${item.category}\nDesc: ${item.desc}`;
             }
           }
         }
       },
       scales: {
         x: {
-          title: { display: true, text: "Gini Importance Score (0 to 1)" },
+          title: { display: true, text: "Score (0 to 1)", font: { size: 10 } },
+          ticks: { font: { size: 10 } },
           grid: { color: "rgba(120, 113, 108, 0.12)" }
         },
         y: {
+          ticks: { font: { size: 10, family: "monospace" } },
           grid: { display: false }
         }
       }
@@ -154,7 +156,7 @@ function initModelComparisonChart() {
   const ctx = document.getElementById("modelComparisonBarChart");
   if (!ctx) return;
 
-  const metricsNames = ["Accuracy", "Precision", "Recall", "F1-Score", "ROC-AUC"];
+  const metricsNames = ["Accuracy", "Precision", "Recall", "F1", "ROC-AUC"];
   const rfData = [0.824, 0.385, 0.238, 0.294, 0.689];
   const lrData = [0.485, 0.173, 0.378, 0.271, 0.594];
   const lstmData = [0.779, 0.378, 0.667, 0.483, 0.909];
@@ -167,22 +169,22 @@ function initModelComparisonChart() {
       labels: metricsNames,
       datasets: [
         {
-          label: "Random Forest (Ensemble)",
+          label: "Random Forest",
           data: rfData,
-          backgroundColor: "#1e3a8a", // Navy
-          borderRadius: 4
+          backgroundColor: "#1e3a8a",
+          borderRadius: 3
         },
         {
-          label: "Linear Regression (Baseline)",
+          label: "Linear Regression",
           data: lrData,
-          backgroundColor: "#b45309", // Raw Amber
-          borderRadius: 4
+          backgroundColor: "#b45309",
+          borderRadius: 3
         },
         {
-          label: "LSTM Sequence (Best Model)",
+          label: "LSTM Sequence",
           data: lstmData,
-          backgroundColor: "#15803d", // Sage Forest
-          borderRadius: 4
+          backgroundColor: "#15803d",
+          borderRadius: 3
         }
       ]
     },
@@ -190,14 +192,15 @@ function initModelComparisonChart() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { boxWidth: 14 } }
+        legend: { labels: { boxWidth: 12, font: { size: 11 } } }
       },
       scales: {
-        x: { grid: { display: false } },
+        x: { ticks: { font: { size: 11 } }, grid: { display: false } },
         y: {
           min: 0,
           max: 1.0,
-          title: { display: true, text: "Metric Score (0 to 1)" },
+          title: { display: true, text: "Metric Score", font: { size: 10 } },
+          ticks: { font: { size: 10 } },
           grid: { color: "rgba(120, 113, 108, 0.12)" }
         }
       }
@@ -221,34 +224,34 @@ function initRocChart() {
         {
           label: "LSTM (AUC = 0.909)",
           data: curves.lstm.map(pt => ({ x: pt.fpr, y: pt.tpr })),
-          borderColor: "#15803d", // Sage Forest
+          borderColor: "#15803d",
           backgroundColor: "rgba(21, 128, 61, 0.05)",
-          borderWidth: 2.5,
+          borderWidth: 2,
           tension: 0.3,
-          pointRadius: 2.5
+          pointRadius: 2
         },
         {
           label: "Random Forest (AUC = 0.689)",
           data: curves.rf.map(pt => ({ x: pt.fpr, y: pt.tpr })),
-          borderColor: "#1e3a8a", // Navy
-          borderWidth: 2,
+          borderColor: "#1e3a8a",
+          borderWidth: 1.75,
           tension: 0.3,
-          pointRadius: 2.5
+          pointRadius: 2
         },
         {
           label: "Linear Regression (AUC = 0.594)",
           data: curves.lr.map(pt => ({ x: pt.fpr, y: pt.tpr })),
-          borderColor: "#b45309", // Amber
+          borderColor: "#b45309",
           borderWidth: 1.5,
           tension: 0.2,
           pointRadius: 2
         },
         {
-          label: "Random Guess (0.50)",
+          label: "Random (0.50)",
           data: [{ x: 0, y: 0 }, { x: 1, y: 1 }],
           borderColor: "rgba(120, 113, 108, 0.4)",
-          borderDash: [5, 5],
-          borderWidth: 1.5,
+          borderDash: [4, 4],
+          borderWidth: 1.25,
           pointRadius: 0,
           fill: false
         }
@@ -258,21 +261,23 @@ function initRocChart() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { boxWidth: 14 } }
+        legend: { labels: { boxWidth: 12, font: { size: 11 } } }
       },
       scales: {
         x: {
           type: "linear",
           min: 0,
           max: 1.0,
-          title: { display: true, text: "False Positive Rate (1 - Specificity)" },
+          title: { display: true, text: "False Positive Rate", font: { size: 10 } },
+          ticks: { font: { size: 10 } },
           grid: { color: "rgba(120, 113, 108, 0.12)" }
         },
         y: {
           type: "linear",
           min: 0,
           max: 1.0,
-          title: { display: true, text: "True Positive Rate (Recall / Sensitivity)" },
+          title: { display: true, text: "True Positive Rate (Recall)", font: { size: 10 } },
+          ticks: { font: { size: 10 } },
           grid: { color: "rgba(120, 113, 108, 0.12)" }
         }
       }
@@ -292,23 +297,23 @@ function initLstmTrainingLossChart() {
   lossChartInstance = new Chart(ctx, {
     type: "line",
     data: {
-      labels: history.epochs.map(e => `Epoch ${e}`),
+      labels: history.epochs.map(e => `Ep ${e}`),
       datasets: [
         {
           label: "Training Loss",
           data: history.trainLoss,
-          borderColor: "#c2410c", // Terracotta
+          borderColor: "#c2410c",
           backgroundColor: "rgba(194, 65, 12, 0.05)",
           borderWidth: 2,
-          pointRadius: 3,
+          pointRadius: 2.5,
           tension: 0.2
         },
         {
-          label: "Validation Loss (Best @ Epoch 2 = 0.612)",
+          label: "Validation Loss (Best @ Ep 2 = 0.612)",
           data: history.valLoss,
-          borderColor: "#b45309", // Amber
-          borderWidth: 2,
-          pointRadius: 3,
+          borderColor: "#b45309",
+          borderWidth: 1.75,
+          pointRadius: 2.5,
           tension: 0.2
         }
       ]
@@ -317,12 +322,13 @@ function initLstmTrainingLossChart() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { boxWidth: 14 } }
+        legend: { labels: { boxWidth: 12, font: { size: 11 } } }
       },
       scales: {
-        x: { grid: { color: "rgba(120, 113, 108, 0.12)" } },
+        x: { ticks: { font: { size: 10 } }, grid: { color: "rgba(120, 113, 108, 0.12)" } },
         y: {
-          title: { display: true, text: "Binary Cross-Entropy Loss" },
+          title: { display: true, text: "Binary Cross-Entropy Loss", font: { size: 10 } },
+          ticks: { font: { size: 10 } },
           grid: { color: "rgba(120, 113, 108, 0.12)" }
         }
       }
@@ -332,7 +338,6 @@ function initLstmTrainingLossChart() {
 
 /* Dynamic theme update for charts */
 window.updateChartColors = function(themeName) {
-  // Let the charts re-initialize with current theme styling
   initTemperatureChart();
   initFeatureImportanceChart();
   initModelComparisonChart();
@@ -356,14 +361,14 @@ function initSpatialMapSelector() {
     mapImg.src = `assets/images/${filename}`;
 
     const varLabels = {
-      "geopotential": "Geopotential Height (m) — Tracks the physical shape & splitting of the polar vortex.",
-      "u_wind": "Zonal U-Wind (m/s) — Shows the classic wind flip from West-to-East (+) to backwards East-to-West (-).",
-      "temperature": "Temperature (K / °C) — Displays the rapid warming spike across the Arctic cap.",
-      "v_wind": "Meridional V-Wind (m/s) — Illustrates atmospheric waves and north-south storm turbulence."
+      "geopotential": "Geopotential Height (m) — Tracks polar vortex mass restructuring and displacement.",
+      "u_wind": "Zonal U-Wind (m/s) — Reversal from westerly flow (+) to easterly circulation (-).",
+      "temperature": "Temperature (K / °C) — Polar cap stratospheric warming excursion.",
+      "v_wind": "Meridional V-Wind (m/s) — Planetary wave breaking and eddy heat momentum flux."
     };
 
     if (captionEl) {
-      captionEl.innerHTML = `<strong>${varLabels[v]}</strong> Comparing conditions 15 days before, on the day of the event (${ev}), and 15 days after. Generated from real ECMWF ERA5 satellite reanalysis.`;
+      captionEl.innerHTML = `<strong>${varLabels[v]}</strong> 15 days before, onset day (${ev}), and 15 days after. Source: ECMWF ERA5 (10 hPa).`;
     }
   }
 
@@ -391,7 +396,7 @@ function initPredictionSandbox() {
     document.getElementById("sbTempStdVal").innerText = `${tempStd.toFixed(1)}°C`;
     document.getElementById("sbVWindVal").innerText = `${vWind.toFixed(1)} m/s`;
 
-    // Surrogate sequence probability
+    // Sequence surrogate probability calculation
     const zScore = (geo * 0.0035) + (temp * 0.09) + (tempStd * 0.35) + (Math.abs(vWind) * 0.08) - 1.8;
     const lstmProb = 1 / (1 + Math.exp(-zScore));
 
@@ -409,16 +414,16 @@ function initPredictionSandbox() {
     if (rfCompText) rfCompText.innerText = `${Math.round(rfProb * 100)}%`;
 
     if (probPct >= 65) {
-      statusPill.className = "badge-clean badge-rose";
-      statusPill.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> HIGH RISK: SSW POLAR BREAKDOWN LIKELY';
+      statusPill.className = "pill-clean pill-rose";
+      statusPill.innerText = "HIGH RISK: POLAR BREAKDOWN LIKELY";
       probBar.style.backgroundColor = "var(--accent-primary)";
     } else if (probPct >= 35) {
-      statusPill.className = "badge-clean badge-amber";
-      statusPill.innerHTML = '<i class="fa-solid fa-bell"></i> ELEVATED: VORTEX UNSTABLE';
+      statusPill.className = "pill-clean pill-amber";
+      statusPill.innerText = "ELEVATED: VORTEX UNSTABLE";
       probBar.style.backgroundColor = "var(--accent-amber)";
     } else {
-      statusPill.className = "badge-clean badge-green";
-      statusPill.innerHTML = '<i class="fa-solid fa-circle-check"></i> NORMAL: STABLE POLAR VORTEX';
+      statusPill.className = "pill-clean pill-green";
+      statusPill.innerText = "NORMAL: STABLE POLAR VORTEX";
       probBar.style.backgroundColor = "var(--accent-emerald)";
     }
   }
