@@ -1,33 +1,68 @@
 /**
- * PolarWatch Analytics — Main Script & Tab Navigation Engine
+ * PolarWatch AI — Scientific Analytics Engine Main Script
+ * Team CipheI / PCCOE Pune
+ * Tanmay Joshi (125B1C170)
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Tab Navigation Controller
-  const tabBtns = document.querySelectorAll(".tab-btn");
-  const tabContents = document.querySelectorAll(".tab-content");
+  // 1. Multi-Theme Preset Controller
+  const themeBtns = document.querySelectorAll(".theme-pill-btn");
+  const savedTheme = localStorage.getItem("polarwatch_theme_preset") || "theme-editorial";
 
-  tabBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const targetId = btn.getAttribute("data-tab");
+  function applyTheme(themeName) {
+    document.body.classList.remove("theme-editorial", "theme-forest", "theme-obsidian");
+    if (themeName !== "theme-editorial") {
+      document.body.classList.add(themeName);
+    }
+    localStorage.setItem("polarwatch_theme_preset", themeName);
 
-      tabBtns.forEach(b => b.classList.remove("active"));
-      tabContents.forEach(c => c.classList.remove("active"));
-
-      btn.classList.add("active");
-      const targetContent = document.getElementById(targetId);
-      if (targetContent) {
-        targetContent.classList.add("active");
+    themeBtns.forEach(btn => {
+      if (btn.getAttribute("data-theme") === themeName) {
+        btn.classList.add("active");
+      } else {
+        btn.classList.remove("active");
       }
+    });
 
-      // Trigger chart resize/render for freshly revealed charts
-      if (window.updateChartColors) {
-        window.updateChartColors();
+    // Re-render chart colors if available
+    if (window.updateChartColors) {
+      window.updateChartColors(themeName);
+    }
+  }
+
+  // Set initial theme
+  applyTheme(savedTheme);
+
+  // Attach button click listeners
+  themeBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const selected = btn.getAttribute("data-theme");
+      applyTheme(selected);
+    });
+  });
+
+  // 2. Active Navigation Highlight on Scroll
+  const navLinks = document.querySelectorAll(".nav-link");
+  const sections = document.querySelectorAll("section[id], header[id]");
+
+  window.addEventListener("scroll", () => {
+    let current = "";
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute("id");
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove("active");
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active");
       }
     });
   });
 
-  // 2. Render KaTeX equations
+  // 3. Render KaTeX equations if available
   if (window.renderMathInElement) {
     try {
       window.renderMathInElement(document.body, {
