@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STRATOWATCH — Public Awareness & Polar Vortex Early Warning</title>
+  <link rel="stylesheet" href="assets/css/public-awareness.css" />
+</head>
+<body>
+  <div class="site-shell">
+
+    <!-- Top Navigation Bar -->
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><span></span></span>
+        <span>STRATO<span>WATCH</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="active" href="index.html">Public awareness</a>
+        <a href="science.html">Scientific analysis <span class="nav-dot"></span></a>
+      </nav>
+      <div class="status-chip">
+        <span class="live-dot"></span> Live signal &nbsp;/&nbsp; 06 Nov 2026
+      </div>
+    </header>
+
+    <main>
+      <!-- App Walkthrough Gallery / 01-03 -->
+      <section class="app-gallery">
+        <div class="gallery-kicker">APP WALKTHROUGH / 01-03</div>
+        <div class="phone-gallery">
+
+          <!-- Phone 1: Location Setup -->
+          <div class="phone-demo phone-screen">
+            <div class="phone-top">
+              <span>09:41</span>
+              <span>STATUS</span>
+            </div>
+            <div class="phone-status">
+              <span class="status-ring"></span> STRATOWATCH <b>LIVE</b>
+            </div>
+            <div class="phone-screen-label">LOCATION SETUP</div>
+            <div class="phone-location-card">
+              <span class="location-crosshair">GPS</span>
+              <small>LOCATION SERVICES</small>
+              <strong>Find your local signal</strong>
+              <p>StratoWatch uses your location to show the right area and alert level.</p>
+              <button id="phone-location-btn" onclick="enableLiveLocation()">Use my location <span>OPEN</span></button>
+              <div class="location-privacy" id="phone-location-privacy">Approximate area only &nbsp;/&nbsp; precise location stays private</div>
+            </div>
+            <div class="phone-bottom">
+              <span class="phone-active"><small>Home</small></span>
+              <span><small>Alerts</small></span>
+              <span><small>Map</small></span>
+              <span><small>More</small></span>
+            </div>
+          </div>
+
+          <!-- Phone 2: Your Area -->
+          <div class="phone-demo phone-screen">
+            <div class="phone-top">
+              <span>09:41</span>
+              <span>STATUS</span>
+            </div>
+            <div class="phone-status">
+              <span class="status-ring"></span> STRATOWATCH <b>LIVE</b>
+            </div>
+            <div class="phone-screen-label">YOUR AREA</div>
+            <div class="phone-area-card">
+              <small>CURRENTLY IN</small>
+              <strong id="phone-area-name">Oslo region</strong>
+              <span class="phone-coordinates" id="phone-area-coords">59.9139 deg N &nbsp;/&nbsp; 10.7522 deg E</span>
+              <div class="phone-risk-row">
+                <span class="risk-dot high"></span> <b>HIGH SIGNAL</b>
+                <small>5-10 day watch</small>
+              </div>
+              <p>Cold-air displacement may affect your area.</p>
+              <button onclick="openAlertModal()">Open warning <span>OPEN</span></button>
+            </div>
+            <div class="phone-mini-note">GPS location TO area signal TO practical next step</div>
+            <div class="phone-bottom">
+              <span><small>Home</small></span>
+              <span class="phone-active"><small>Alerts</small></span>
+              <span><small>Map</small></span>
+              <span><small>More</small></span>
+            </div>
+          </div>
+
+          <!-- Phone 3: Your Precautions -->
+          <div class="phone-demo phone-screen">
+            <div class="phone-top">
+              <span>09:41</span>
+              <span>STATUS</span>
+            </div>
+            <div class="phone-status">
+              <span class="status-ring"></span> STRATOWATCH <b>LIVE</b>
+            </div>
+            <div class="phone-screen-label">YOUR PRECAUTIONS</div>
+            <div class="phone-precaution-head" id="phone-precaution-head">
+              <small>HIGH ALERT</small>
+              <strong>High alert</strong>
+              <p>Prepare now and limit exposure</p>
+            </div>
+            <div class="phone-precaution-list" id="phone-precaution-list">
+              <div><span>01</span><b>Stay indoors when advised</b></div>
+              <div><span>02</span><b>Build a 3-day home kit</b></div>
+              <div><span>03</span><b>Protect people and pipes</b></div>
+            </div>
+            <button class="phone-precaution-button" onclick="document.getElementById('precautions')?.scrollIntoView({ behavior: 'smooth' })">
+              See all measures <span>DOWN</span>
+            </button>
+            <div class="phone-bottom">
+              <span><small>Home</small></span>
+              <span><small>Alerts</small></span>
+              <span><small>Map</small></span>
+              <span class="phone-active"><small>More</small></span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Event Alert Banner -->
+      <section class="event-banner">
+        <div class="event-signal">
+          <span class="signal-wave"></span> ALERT
+        </div>
+        <div class="event-copy">
+          <span>SSW EVENT DETECTED &nbsp;/&nbsp; MODERATE CONFIDENCE</span>
+          <strong>Possible cold-air displacement across northern Europe</strong>
+          <small>Expected signal window: 5-14 days &nbsp;/&nbsp; latest update 06 Nov, 12:00 UTC</small>
+        </div>
+        <button class="outline-button" onclick="openAlertModal()">Open full alert <span>OPEN</span></button>
+        <button class="bell-button" id="btn-alert-bell" onclick="toggleAlerts()" aria-label="Toggle local alerts">ALERTS</button>
+      </section>
+
+      <!-- Impact Map Section -->
+      <section class="impact-section" id="impact-map">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-line"></span> What the app shows</p>
+            <h2>One event.<br /><em>Different local signals.</em></h2>
+          </div>
+          <p class="section-note">
+            The app does not colour every city red. It shows how confidence changes across the projected pathway, from high to medium to low.
+          </p>
+        </div>
+
+        <div class="impact-layout">
+          <!-- Live Coordinate Map -->
+          <div class="coordinate-map" aria-label="Coordinate-driven map of SSW influence across the North Atlantic and Europe">
+            <div class="map-toolbar">
+              <span>LIVE IMPACT MAP</span>
+              <span>45 deg-70 degN &nbsp;/&nbsp; 80 degW-35 degE</span>
+            </div>
+            <div class="map-water">
+              <div class="map-grid-line vertical v1"></div>
+              <div class="map-grid-line vertical v2"></div>
+              <div class="map-grid-line horizontal h1"></div>
+              <div class="map-grid-line horizontal h2"></div>
+              <div class="map-grid-line horizontal h3"></div>
+
+              <!-- Land Outlines -->
+              <div class="land-shape north-america"></div>
+              <div class="land-shape greenland"></div>
+              <div class="land-shape europe-land"></div>
+              <div class="land-shape scandinavia-land"></div>
+              <div class="land-shape uk-land"></div>
+              <div class="land-shape iceland-land"></div>
+
+              <!-- Interactive Risk Regions -->
+              <div class="risk-region risk-nordic" onclick="selectRegion('nordic')"><span>HIGH</span></div>
+              <div class="risk-region risk-atlantic" onclick="selectRegion('atlantic')"><span>MED</span></div>
+              <div class="risk-region risk-europe" onclick="selectRegion('europe')"><span>MED</span></div>
+              <div class="risk-region risk-canada" onclick="selectRegion('canada')"><span>LOW</span></div>
+
+              <!-- Dynamic Projected City Markers -->
+              <div id="map-city-markers"></div>
+
+              <span class="map-label label-north">70 degN</span>
+              <span class="map-label label-south">45 degN</span>
+              <span class="map-label label-west">80 degW</span>
+              <span class="map-label label-east">35 degE</span>
+            </div>
+            <div class="map-footer">
+              <span><i class="legend-high"></i> High</span>
+              <span><i class="legend-medium"></i> Medium</span>
+              <span><i class="legend-low"></i> Low</span>
+              <small>Google Maps-compatible coordinates &nbsp;/&nbsp; click a city to open Maps</small>
+            </div>
+          </div>
+
+          <!-- Region Watchlist Panel -->
+          <aside class="region-panel">
+            <div class="panel-kicker" id="region-panel-kicker">
+              <span class="risk-dot high"></span> Selected area <span class="risk-pill high">High signal</span>
+            </div>
+            <h3 id="region-panel-title">Nordic corridor</h3>
+            <p id="region-panel-summary">
+              The strongest signal is currently focused across Scandinavia, where a displaced polar vortex can increase the chance of colder conditions.
+            </p>
+            <div class="timing-row">
+              <span>App watch window</span>
+              <strong id="region-panel-window">5-10 day watch</strong>
+            </div>
+            <div class="city-heading">
+              <span>City watchlist</span>
+              <span id="region-panel-city-count">3 locations</span>
+            </div>
+            <div class="city-list" id="region-panel-city-list"></div>
+            <button class="panel-button" onclick="openAlertModal()">View this area in alert <span>OPEN</span></button>
+          </aside>
+        </div>
+      </section>
+
+      <!-- Precautions Section -->
+      <section class="precautions-section" id="precautions">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow"><span class="eyebrow-line"></span> Public awareness / do this next</p>
+            <h2>Precautions that<br /><em>match the alert.</em></h2>
+          </div>
+          <p class="section-note">
+            Choose a level to see the actions the app would recommend. Always follow your local authority's weather and emergency guidance.
+          </p>
+        </div>
+
+        <div class="precaution-tabs">
+          <button class="level-tab high selected" id="tab-level-high" onclick="setPrecautionLevel('High')">
+            <span class="risk-dot"></span> High <small>High alert</small>
+          </button>
+          <button class="level-tab medium" id="tab-level-medium" onclick="setPrecautionLevel('Medium')">
+            <span class="risk-dot"></span> Medium <small>Medium watch</small>
+          </button>
+          <button class="level-tab low" id="tab-level-low" onclick="setPrecautionLevel('Low')">
+            <span class="risk-dot"></span> Low <small>Low watch</small>
+          </button>
+        </div>
+
+        <div class="precaution-intro" id="precaution-intro-container"></div>
+        <div class="precaution-grid" id="precaution-grid"></div>
+
+        <div class="source-note">
+          Guidance adapted for this prototype from <a href="https://www.ready.gov/winter-weather" target="_blank" rel="noreferrer">Ready.gov winter-weather guidance</a> and <a href="https://www.weather.gov/dlh/extremecold" target="_blank" rel="noreferrer">National Weather Service extreme-cold guidance</a>.
+        </div>
+      </section>
+
+      <!-- Community Help Layer Section -->
+      <section class="community-section">
+        <div class="community-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> Community help layer</p>
+          <h2>Find people nearby<br /><em>and talk safely.</em></h2>
+          <p>
+            Turn on approximate location to see nearby people who can help or need help. Tap a person to open a chat and share the situation before you meet.
+          </p>
+          <div class="help-actions">
+            <button class="selected" id="btn-help-ask" onclick="setHelpMode('ask')">I need help</button>
+            <button id="btn-help-offer" onclick="setHelpMode('offer')">I can help</button>
+          </div>
+          <div class="privacy-line" id="community-privacy-line">
+            LOCATION Approximate area only &nbsp;/&nbsp; Exact home addresses stay hidden
+          </div>
+          <button class="location-action" id="location-action-btn" onclick="enableLiveLocation()">Turn on nearby people</button>
+        </div>
+
+        <div class="community-map">
+          <div class="community-map-top">
+            <span id="community-top-text">NEARBY HELPERS &nbsp;/&nbsp; 2.4 KM</span>
+            <span class="community-live"><i></i> LIVE DEMO</span>
+          </div>
+          <div class="community-streets">
+            <span class="street street-a"></span>
+            <span class="street street-b"></span>
+            <span class="street street-c"></span>
+            <span class="street street-d"></span>
+            <span class="safe-point">HOME<small>Warm centre</small></span>
+            <div id="community-markers"></div>
+          </div>
+          <div class="community-map-footer">
+            <span id="community-footer-text">Showing people who can help</span>
+            <button onclick="enableLiveLocation()">Refresh nearby</button>
+          </div>
+
+          <!-- Interactive Chat Drawer Panel -->
+          <div id="chat-panel-container" style="display:none;"></div>
+        </div>
+      </section>
+
+      <!-- Area Situation Report Section -->
+      <section class="response-section">
+        <div class="response-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> Area situation report</p>
+          <h2>What is happening<br /><em>on the ground.</em></h2>
+          <ul class="situation-list">
+            <li>
+              <span class="situation-icon road-icon">ROAD</span>
+              <div>
+                <b>E6 road blockade</b>
+                <small>Ice accumulation &nbsp;/&nbsp; avoid the northern junction</small>
+              </div>
+            </li>
+            <li>
+              <span class="situation-icon water-icon">WATER</span>
+              <div>
+                <b>River level rising</b>
+                <small>Low-lying crossing flagged for inspection</small>
+              </div>
+            </li>
+            <li>
+              <span class="situation-icon power-icon">POWER</span>
+              <div>
+                <b>Power interruption</b>
+                <small>Two neighbourhoods requesting a welfare check</small>
+              </div>
+            </li>
+            <li>
+              <span class="situation-icon safe-icon">SAFE</span>
+              <div>
+                <b>Warm centre open</b>
+                <small>Community shelter receiving residents</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="response-board">
+          <div class="response-board-head">
+            <span>OPERATIONS / NORDIC CORRIDOR</span>
+            <span class="board-live">SATELLITE SYNCED</span>
+          </div>
+          <div class="response-map">
+            <div class="satellite-grid"></div>
+            <div class="satellite-heat heat-one"></div>
+            <div class="satellite-heat heat-two"></div>
+            <div class="satellite-heat heat-three"></div>
+            <span class="road road-one"><i></i> E18 <b>RISK</b></span>
+            <span class="road road-two blocked"><i></i> E6 <b>BLOCKED</b></span>
+            <span class="road road-three"><i></i> 4 <b>OPEN</b></span>
+            <span class="road road-four blocked"><i></i> 12 <b>BLOCKED</b></span>
+            <span class="river-line"></span>
+            <span class="rescue rescue-one">HELP</span>
+            <span class="rescue rescue-two">HELP</span>
+            <span class="rescue rescue-three">HELP</span>
+          </div>
+          <div class="response-board-footer">
+            <span><i class="legend-high"></i> People density</span>
+            <span><i class="road-red"></i> Road blocked</span>
+            <span><i class="rescue-dot"></i> Response team</span>
+            <button onclick="openAlertModal()">Open area report</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="brand footer-brand">
+        <span class="brand-mark"><span></span></span>
+        <span>STRATO<span>WATCH</span></span>
+      </div>
+      <p>Atmospheric science translated into local preparedness.</p>
+      <span class="footer-code">PUBLIC BRIEF / 001</span>
+    </footer>
+
+    <!-- Urgent SSW Warning Alert Modal -->
+    <div class="modal-backdrop" id="alert-modal-backdrop" style="display:none;" onclick="closeAlertModal()">
+      <div class="warning-modal urgent-warning" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="warning-title">
+        <button class="modal-close" onclick="closeAlertModal()" aria-label="Close warning">CLOSE</button>
+        <div class="urgent-strip">
+          <span class="urgent-pulse"></span> <b>SSW WARNING</b><span>ACT NOW</span>
+        </div>
+        <div class="urgent-head">
+          <span class="modal-alert-icon"><span class="signal-wave"></span></span>
+          <div>
+            <b>SEVERE COLD-AIR RISK</b>
+            <small id="modal-warning-subtitle">Warning for Nordic corridor</small>
+          </div>
+        </div>
+        <h2 id="warning-title">SSW EVENT<br /><em>DETECTED</em></h2>
+        <div class="urgent-area">
+          <span>AFFECTED AREA</span>
+          <strong id="modal-warning-area">Nordic corridor</strong>
+          <span class="risk-pill high" id="modal-warning-pill">HIGH ALERT</span>
+          <div id="modal-warning-cities">
+            <b> Oslo</b><b> Stockholm</b><b> Helsinki</b>
+          </div>
+        </div>
+        <p class="urgent-action">
+          <strong>PREPARE NOW:</strong> Stay informed, limit unnecessary travel, and check on vulnerable people.
+        </p>
+        <button class="primary-button modal-button" onclick="enableAlertsFromModal()">
+          VIEW SAFETY ACTIONS <span>OPEN</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Live Demo Floating Toast -->
+    <button class="demo-toast" id="demo-toast-btn" style="display:none;" onclick="openAlertModal()">
+      <span class="toast-pulse"></span> Demo alert is active <b>Open</b>
+    </button>
+
+  </div>
+
+  <script src="assets/js/public-awareness.js"></script>
+</body>
+</html>

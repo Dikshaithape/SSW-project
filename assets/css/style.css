@@ -1162,3 +1162,154 @@ footer {
   flex-shrink: 0;
   font-size: 0.85rem;
 }
+
+
+/* ===================================================================
+   5. UNIFIED STRATOWATCH TOPBAR & SUBNAV (Shared Layout)
+   =================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.topbar {
+  height: 78px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(22px, 5vw, 76px);
+  background: rgba(245, 246, 242, 0.98);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  color: #10243b;
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.brand > span:last-child > span {
+  color: #4cb6bd;
+}
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #4cb6bd;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+.brand-mark:before, .brand-mark:after {
+  content: "";
+  position: absolute;
+  border: 1px solid #4cb6bd;
+  border-radius: 50%;
+  inset: 4px;
+  transform: rotate(55deg);
+}
+.brand-mark:after {
+  transform: rotate(-55deg);
+}
+.brand-mark span {
+  width: 6px;
+  height: 6px;
+  background: #ee8d52;
+  border-radius: 50%;
+  z-index: 1;
+}
+.main-nav {
+  display: flex;
+  gap: 34px;
+  margin-left: 8%;
+}
+.main-nav a {
+  font-size: 13px;
+  color: #8293a1;
+  text-decoration: none;
+  font-weight: 700;
+  padding: 28px 0;
+  position: relative;
+  transition: color 0.15s ease;
+}
+.main-nav a:hover {
+  color: #10243b;
+}
+.main-nav a.active {
+  color: #10243b;
+}
+.main-nav a.active:after {
+  content: "";
+  height: 2px;
+  background: #ee8d52;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
+.nav-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4cb6bd;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.status-chip {
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #6b8190;
+  background: #edf3f0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #d3e2dd;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+}
+.sub-navbar {
+  position: sticky;
+  top: 78px;
+  z-index: 990;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  padding: 0.65rem 0;
+  backdrop-filter: blur(8px);
+}
+.sub-nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sub-nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+.sub-nav-link:hover, .sub-nav-link.active {
+  color: var(--accent-primary);
+  background: var(--accent-primary-subtle);
+}

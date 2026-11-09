@@ -1,0 +1,2162 @@
+﻿<!DOCTYPE html>
+
+
+
+<html lang="en">
+
+
+
+<head>
+
+
+
+  <meta charset="UTF-8">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+  <title>STRATOWATCH ΓÇö Sudden Stratospheric Warming Detection & Prediction Engine</title>
+
+
+
+  
+
+
+
+  <!-- Fonts & Icons -->
+
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+
+  
+
+
+
+  <!-- KaTeX for Clean Math Rendering -->
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+
+
+
+
+
+
+
+  <!-- Chart.js for Interactive Charts -->
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+
+
+
+
+
+
+  <!-- Clean Theme Stylesheet -->
+
+
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+
+
+</head>
+
+
+
+<body class="theme-editorial">
+
+
+
+
+
+
+
+    <!-- Unified STRATOWATCH Top Navigation Bar -->
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark"><span></span></span>
+      <span>STRATO<span>WATCH</span></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Public awareness</a>
+      <a class="active" href="science.html">Scientific analysis <span class="nav-dot"></span></a>
+    </nav>
+    <div class="status-chip">
+      <span class="live-dot"></span> ECMWF ERA5 10 hPa Reanalysis
+    </div>
+  </header>
+
+  <!-- Sticky Sub-Navigation for Scientific Analysis Sections -->
+  <nav class="sub-navbar">
+    <div class="container">
+      <ul class="sub-nav-links">
+        <li><a href="#overview" class="sub-nav-link active">Overview</a></li>
+        <li><a href="#formulation" class="sub-nav-link">Atmospheric Inputs</a></li>
+        <li><a href="#events" class="sub-nav-link">Event Indexing</a></li>
+        <li><a href="#spatial" class="sub-nav-link">Spatial Maps</a></li>
+        <li><a href="#features" class="sub-nav-link">Feature Ranking</a></li>
+        <li><a href="#forecast" class="sub-nav-link">3–4 Day Lead Tracker</a></li>
+        <li><a href="#sandbox" class="sub-nav-link">Live Sandbox</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+
+
+
+
+  <!-- Header & Overview Section -->
+
+
+
+  <header id="overview" style="padding: 2.75rem 0 2rem; border-bottom: 1px solid var(--border-light); background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-app) 100%);">
+
+
+
+    <div class="container">
+
+
+
+      
+
+
+
+      <!-- Hackathon Prototype Live Indicator Strip -->
+
+
+
+      <div class="hackathon-banner-strip">
+
+
+
+        <span class="live-pulse-dot"></span>
+
+
+
+        <strong style="color: var(--text-primary); letter-spacing: 0.04em;">HACKATHON PROTOTYPE</strong>
+
+
+
+        <span style="color: var(--text-muted); opacity: 0.5;">|</span>
+
+
+
+        <span style="color: var(--text-secondary); font-weight: 500;">AtmosAI Polar Vortex Early Warning Platform</span>
+
+
+
+        <span style="color: var(--text-muted); opacity: 0.5;">|</span>
+
+
+
+        <span style="color: var(--accent-primary); font-weight: 600;">ECMWF ERA5 10 hPa</span>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <h1 style="font-size: 2.3rem; font-weight: 800; line-height: 1.25; margin-bottom: 1rem; color: var(--text-primary); letter-spacing: -0.02em;">
+
+
+
+        Sudden Stratospheric Warming <span style="color: var(--accent-primary);">Event Detection</span> Using Neural Sequence Models
+
+
+
+      </h1>
+
+
+
+
+
+
+
+      <p style="font-size: 1.05rem; color: var(--text-secondary); max-width: 980px; margin-bottom: 1.5rem; line-height: 1.6;">
+
+
+
+        An open-source machine learning early-warning engine trained on 6 winter seasons (2020ΓÇô2026, 727 daily observations) of ECMWF ERA5 atmospheric reanalysis. Forecasts polar vortex breakdown up to 14 days in advance, predicting extreme subseasonal tropospheric cold waves across North America, Europe, and Northern India.
+
+
+
+      </p>
+
+
+
+
+
+
+
+            <!-- Quick Hackathon Action Navigation Buttons -->
+
+      <div class="hero-actions">
+
+        <a href="#forecast" class="hero-btn hero-btn-primary">
+
+          3-4 Day Pre-Onset Tracker &amp; Heatmaps
+
+        </a>
+
+        <a href="#sandbox" class="hero-btn hero-btn-secondary">
+
+          Live Sandbox
+
+        </a>
+
+        <a href="#spatial" class="hero-btn hero-btn-secondary">
+
+          24 Polar Maps
+
+        </a>
+
+      </div>
+
+
+
+
+
+
+
+            <!-- Key Performance Indicators (Light-Coloured Boxes) -->
+
+      <div class="stat-grid">
+
+        <!-- Box 1: LSTM ROC-AUC -->
+
+        <div class="stat-card stat-auc">
+
+          <div class="stat-card-header">
+
+            <span class="stat-label">LSTM ROC-AUC</span>
+
+            <span class="stat-pill">Top Discriminator</span>
+
+          </div>
+
+          <div>
+
+            <span class="stat-value" style="color: var(--box-auc-accent);">0.909</span>
+
+            <span class="stat-desc">Best overall discriminative power</span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Box 2: LSTM Recall -->
+
+        <div class="stat-card stat-rec">
+
+          <div class="stat-card-header">
+
+            <span class="stat-label">LSTM Recall</span>
+
+            <span class="stat-pill">High Sensitivity</span>
+
+          </div>
+
+          <div>
+
+            <span class="stat-value" style="color: var(--box-rec-accent);">66.7%</span>
+
+            <span class="stat-desc">28 of 42 event days captured</span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Box 3: Dataset Scope -->
+
+        <div class="stat-card stat-scope">
+
+          <div class="stat-card-header">
+
+            <span class="stat-label">Dataset Scope</span>
+
+            <span class="stat-pill">ECMWF ERA5</span>
+
+          </div>
+
+          <div>
+
+            <span class="stat-value" style="color: var(--box-scope-accent);">727 Days</span>
+
+            <span class="stat-desc">6 winter seasons (2020ΓÇô2026)</span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Box 4: Baseline Accuracy -->
+
+        <div class="stat-card stat-base">
+
+          <div class="stat-card-header">
+
+            <span class="stat-label">Baseline Accuracy</span>
+
+            <span class="stat-pill">Skewed Baseline</span>
+
+          </div>
+
+          <div>
+
+            <span class="stat-value" style="color: var(--box-base-accent);">82.4%</span>
+
+            <span class="stat-desc">High class imbalance (84% non-events)</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+
+
+
+
+
+  <!-- Main Content Dashboard -->
+
+
+
+  <main class="container" style="padding: 2.5rem 1rem; display: flex; flex-direction: column; gap: 2.5rem;">
+
+
+
+
+
+
+
+    <!-- 1. Atmospheric Variables Formulation -->
+
+
+
+    <section id="formulation" class="dashboard-card">
+
+
+
+      <div class="card-header-clean">
+
+
+
+        <div>
+
+
+
+          <span class="section-step-pill">SECTION 01 ΓÇó MATHEMATICAL PHYSICS</span>
+
+
+
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.2rem;">
+
+
+
+            <span class="badge-clean badge-blue">Formulation</span>
+
+
+
+            <h2 class="card-title-clean">Atmospheric Variables &amp; Dynamic State Formulation</h2>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.5rem;">
+
+
+
+        Four primary meteorological variables are extracted from ECMWF ERA5 reanalysis at 10 hPa across 50┬░NΓÇô90┬░N to quantify the dynamical state of the polar vortex:
+
+
+
+      </p>
+
+
+
+
+
+
+
+      <div class="formula-grid">
+
+
+
+        <div class="formula-card">
+
+
+
+          <div class="formula-title">Area-Weighted Polar Cap Average</div>
+
+
+
+          <div class="math-block">
+
+
+
+            $$\bar{X}_{\text{cap}}(t) = \frac{\sum_{i,j} X(\phi_i, \lambda_j, t) \cos(\phi_i)}{\sum_{i,j} \cos(\phi_i)}, \quad \phi_i \ge 60^\circ\text{N}$$
+
+
+
+          </div>
+
+
+
+          <div class="formula-desc">
+
+
+
+            Cos-latitude weighting balances polar grid convergence so meridian cells near the pole are not over-represented.
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="formula-card">
+
+
+
+          <div class="formula-title">Zonal Mean U-Wind at 60┬░N</div>
+
+
+
+          <div class="math-block">
+
+
+
+            $$\bar{u}_{60\text{N}}(t) = \frac{1}{N_\lambda} \sum_{j=1}^{N_\lambda} u(\phi = 60^\circ\text{N}, \lambda_j, t)$$
+
+
+
+          </div>
+
+
+
+          <div class="formula-desc">
+
+
+
+            Circumpolar eastward wind. A reversal to negative (westerlies to easterlies) defines a major SSW event.
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="formula-card">
+
+
+
+          <div class="formula-title">Meridional Temperature Gradient</div>
+
+
+
+          <div class="math-block">
+
+
+
+            $$\nabla_y T(t) = \bar{T}_{\text{cap}}(t) - \bar{T}_{50\text{N}-60\text{N}}(t)$$
+
+
+
+          </div>
+
+
+
+          <div class="formula-desc">
+
+
+
+            The difference between Arctic cap temperature and the subpolar ring. Positive values indicate poleward warming.
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="formula-card">
+
+
+
+          <div class="formula-title">Charlton &amp; Polvani (2007) Major SSW Criterion</div>
+
+
+
+          <div class="math-block">
+
+
+
+            $$\text{SSW Onset}(t) \iff \bar{u}_{60\text{N}}(t) < 0 \;\text{m/s} \quad \wedge \quad \bar{u}_{60\text{N}}(t - 1) \ge 0 \;\text{m/s}$$
+
+
+
+          </div>
+
+
+
+          <div class="formula-desc">
+
+
+
+            Standard WMO and literature definition requiring a full wind reversal at 10 hPa and 60┬░N, separated by at least 20 consecutive days.
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- 2. Event Indexing & Polar Cap Temperature -->
+
+
+
+    <section id="events" class="dashboard-card">
+
+
+
+      <div class="card-header-clean">
+
+
+
+        <div>
+
+
+
+          <span class="section-step-pill">SECTION 02 ΓÇó GROUND TRUTH EVENT INDEXING</span>
+
+
+
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.2rem;">
+
+
+
+            <span class="badge-clean badge-amber">Empirical Ground Truth</span>
+
+
+
+            <h2 class="card-title-clean">SSW Event Indexing: Filtering Springtime False Alarms</h2>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.25rem;">
+
+
+
+        Applying the Charlton &amp; Polvani criteria across all 6 winter seasons (2020ΓÇô2026) revealed 11 raw zonal wind reversals. Rigorous physical filtering separates true mid-winter sudden warmings from springtime Final Warmings:
+
+
+
+      </p>
+
+
+
+
+
+
+
+      <!-- Properly Formatted Table 1: Event Indexing -->
+
+
+
+      <div class="table-container">
+
+
+
+        <table class="table-clean">
+
+
+
+          <thead>
+
+
+
+            <tr>
+
+
+
+              <th>Onset Date</th>
+
+
+
+              <th>Winter Season</th>
+
+
+
+              <th>Zonal U-Wind (10 hPa)</th>
+
+
+
+              <th>Cap Temp Anomaly</th>
+
+
+
+              <th>Classification Status</th>
+
+
+
+            </tr>
+
+
+
+          </thead>
+
+
+
+          <tbody>
+
+
+
+            <tr>
+
+
+
+              <td><strong style="font-family: var(--font-mono);">2021-01-05</strong></td>
+
+
+
+              <td>2020ΓÇô2021</td>
+
+
+
+              <td style="color: var(--accent-rose); font-family: var(--font-mono); font-weight: 700;">-5.8 m/s</td>
+
+
+
+              <td style="color: var(--accent-primary); font-family: var(--font-mono); font-weight: 700;">+22.4 K</td>
+
+
+
+              <td><span class="badge-clean badge-rose">Confirmed Major SSW</span></td>
+
+
+
+            </tr>
+
+
+
+            <tr>
+
+
+
+              <td><strong style="font-family: var(--font-mono);">2021-02-10</strong></td>
+
+
+
+              <td>2020ΓÇô2021</td>
+
+
+
+              <td style="color: var(--text-secondary); font-family: var(--font-mono);">-1.2 m/s</td>
+
+
+
+              <td style="color: var(--text-secondary); font-family: var(--font-mono);">+5.1 K</td>
+
+
+
+              <td><span class="badge-clean badge-amber">Excluded (Within 20 Days)</span></td>
+
+
+
+            </tr>
+
+
+
+            <tr>
+
+
+
+              <td><strong style="font-family: var(--font-mono);">2022-03-28</strong></td>
+
+
+
+              <td>2021ΓÇô2022</td>
+
+
+
+              <td style="color: var(--text-secondary); font-family: var(--font-mono);">-4.1 m/s</td>
+
+
+
+              <td style="color: var(--text-secondary); font-family: var(--font-mono);">+8.9 K</td>
+
+
+
+              <td><span class="badge-clean badge-amber">Excluded (Final Warming)</span></td>
+
+
+
+            </tr>
+
+
+
+            <tr>
+
+
+
+              <td><strong style="font-family: var(--font-mono);">2023-02-16</strong></td>
+
+
+
+              <td>2022ΓÇô2023</td>
+
+
+
+              <td style="color: var(--accent-rose); font-family: var(--font-mono); font-weight: 700;">-12.3 m/s</td>
+
+
+
+              <td style="color: var(--accent-primary); font-family: var(--font-mono); font-weight: 700;">+28.6 K</td>
+
+
+
+              <td><span class="badge-clean badge-rose">Confirmed Major SSW</span></td>
+
+
+
+            </tr>
+
+
+
+            <tr>
+
+
+
+              <td><strong style="font-family: var(--font-mono);">2024-01-16</strong></td>
+
+
+
+              <td>2023ΓÇô2024</td>
+
+
+
+              <td style="color: var(--accent-rose); font-family: var(--font-mono); font-weight: 700;">-8.4 m/s</td>
+
+
+
+              <td style="color: var(--accent-primary); font-family: var(--font-mono); font-weight: 700;">+24.1 K</td>
+
+
+
+              <td><span class="badge-clean badge-rose">Confirmed Major SSW</span></td>
+
+
+
+            </tr>
+
+
+
+            <tr>
+
+
+
+              <td><strong style="font-family: var(--font-mono);">2024-03-04</strong></td>
+
+
+
+              <td>2023ΓÇô2024</td>
+
+
+
+              <td style="color: var(--accent-rose); font-family: var(--font-mono); font-weight: 700;">-6.2 m/s</td>
+
+
+
+              <td style="color: var(--accent-primary); font-family: var(--font-mono); font-weight: 700;">+19.8 K</td>
+
+
+
+              <td><span class="badge-clean badge-rose">Confirmed Major SSW</span></td>
+
+
+
+            </tr>
+
+
+
+            <tr>
+
+
+
+              <td><strong style="font-family: var(--font-mono);">2025-01-08</strong></td>
+
+
+
+              <td>2024ΓÇô2025</td>
+
+
+
+              <td style="color: var(--accent-rose); font-family: var(--font-mono); font-weight: 700;">-7.1 m/s</td>
+
+
+
+              <td style="color: var(--accent-primary); font-family: var(--font-mono); font-weight: 700;">+21.2 K</td>
+
+
+
+              <td><span class="badge-clean badge-rose">Confirmed Major SSW</span></td>
+
+
+
+            </tr>
+
+
+
+            <tr>
+
+
+
+              <td><strong style="font-family: var(--font-mono);">2026-02-02</strong></td>
+
+
+
+              <td>2025ΓÇô2026</td>
+
+
+
+              <td style="color: var(--accent-rose); font-family: var(--font-mono); font-weight: 700;">-11.0 m/s</td>
+
+
+
+              <td style="color: var(--accent-primary); font-family: var(--font-mono); font-weight: 700;">+26.5 K</td>
+
+
+
+              <td><span class="badge-clean badge-rose">Confirmed Major SSW</span></td>
+
+
+
+            </tr>
+
+
+
+          </tbody>
+
+
+
+        </table>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <!-- Temperature Series Interactive Chart -->
+
+
+
+      <div>
+
+
+
+        <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary);">
+
+
+
+          Multi-Year Polar Cap Temperature at 10 hPa (┬░C)
+
+
+
+        </h3>
+
+
+
+        <div style="height: 320px; position: relative;">
+
+
+
+          <canvas id="tempTimeSeriesChart"></canvas>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- 3. Atmospheric State Evolution Across the Polar Cap -->
+
+
+
+    <section id="spatial" class="dashboard-card">
+
+
+
+      <div class="card-header-clean">
+
+
+
+        <div>
+
+
+
+          <span class="section-step-pill">SECTION 03 ΓÇó SYNOPTIC ERA5 PROJECTIONS</span>
+
+
+
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.2rem;">
+
+
+
+            <span class="badge-clean badge-blue">Reanalysis Maps</span>
+
+
+
+            <h2 class="card-title-clean">Atmospheric State Evolution Across the Polar Cap</h2>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+
+
+
+          <div>
+
+
+
+            <label style="font-size: 0.8rem; color: var(--text-muted); margin-right: 0.4rem; font-weight: 600;">Variable:</label>
+
+
+
+            <select id="spatialVarSelect" class="select-clean">
+
+
+
+              <option value="geopotential" selected>Geopotential Height (m)</option>
+
+
+
+              <option value="u_wind">Zonal U-Wind (m/s)</option>
+
+
+
+              <option value="temperature">Temperature (K)</option>
+
+
+
+              <option value="v_wind">Meridional V-Wind (m/s)</option>
+
+
+
+            </select>
+
+
+
+          </div>
+
+
+
+          <div>
+
+
+
+            <label style="font-size: 0.8rem; color: var(--text-muted); margin-right: 0.4rem; font-weight: 600;">Event Onset:</label>
+
+
+
+            <select id="spatialEventSelect" class="select-clean">
+
+              <option value="2021-01-05">2021-01-05</option>
+
+              <option value="2021-02-01">2021-02-01</option>
+
+              <option value="2023-02-16">2023-02-16</option>
+
+              <option value="2024-01-16" selected>2024-01-16 (Major Split)</option>
+
+              <option value="2024-03-04">2024-03-04</option>
+
+              <option value="2025-01-08">2025-01-08</option>
+
+              <option value="2026-03-04">2026-03-04 (Severe Arctic Collapse)</option>
+
+            </select>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.25rem;">
+
+
+
+        Direct spatial projections generated from ECMWF ERA5 reanalysis showing atmospheric evolution 15 days before onset, on the event onset date, and 15 days post-event:
+
+
+
+      </p>
+
+
+
+
+
+
+
+      <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.25rem; text-align: center; box-shadow: var(--shadow-sm);">
+
+
+
+        <img id="spatialMapImg" src="assets/images/map_geopotential_2024-01-16.png" alt="Atmospheric Spatial Field" style="width: 100%; max-height: 440px; object-fit: contain; border-radius: var(--radius-sm); display: block; margin: 0 auto; box-shadow: var(--shadow-sm);">
+
+
+
+        <p id="spatialMapCaption" style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 1rem; text-align: left; padding: 0.5rem 0.75rem; background: var(--bg-card); border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+
+
+
+          <strong>Geopotential Height (m) ΓÇö Tracks the physical shape & splitting of the polar vortex.</strong> Comparing conditions 15 days before, on the day of the event (2024-01-16), and 15 days after. Generated from real ECMWF ERA5 satellite reanalysis.
+
+
+
+        </p>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- 4. Feature Importance Ranking -->
+
+
+
+    <section id="features" class="dashboard-card">
+
+
+
+      <div class="card-header-clean">
+
+
+
+        <div>
+
+
+
+          <span class="section-step-pill">SECTION 04 ΓÇó INTERPRETABILITY &amp; EXPLAINABILITY</span>
+
+
+
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.2rem;">
+
+
+
+            <span class="badge-clean badge-emerald">Model Insights</span>
+
+
+
+            <h2 class="card-title-clean">Feature Importance Ranking (Leak-Free Predictors)</h2>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.25rem;">
+
+
+
+        Gini feature importance computed across 500 decision trees in the leak-free Random Forest ensemble. The model confirms that geometric vortex deformation and height variability are the primary precursors to polar breakdown:
+
+
+
+      </p>
+
+
+
+
+
+
+
+      <div style="height: 380px; position: relative; margin-bottom: 1.5rem;">
+
+
+
+        <canvas id="featureImportanceChart"></canvas>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; font-size: 0.86rem;">
+
+
+
+        <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); border-left: 3px solid var(--accent-primary);">
+
+
+
+          <strong style="color: var(--accent-primary); display: block; margin-bottom: 0.35rem; font-size: 0.92rem;">Geopotential Standard Deviation (40.7%)</strong>
+
+
+
+          <span style="color: var(--text-secondary); line-height: 1.45;">Measures horizontal warping and asymmetry of the vortex. As planetary waves impinge upon the polar cap, geopotential height varies drastically across longitudes.</span>
+
+
+
+        </div>
+
+
+
+        <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); border-left: 3px solid var(--accent-navy);">
+
+
+
+          <strong style="color: var(--accent-navy); display: block; margin-bottom: 0.35rem; font-size: 0.92rem;">Geopotential Mean (19.8%)</strong>
+
+
+
+          <span style="color: var(--text-secondary); line-height: 1.45;">Direct proxy for the depth of the polar cyclone. Rising heights signal stratospheric thinning and vortex deceleration.</span>
+
+
+
+        </div>
+
+
+
+        <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); border-left: 3px solid var(--accent-rose);">
+
+
+
+          <strong style="color: var(--accent-rose); display: block; margin-bottom: 0.35rem; font-size: 0.92rem;">Temperature Dynamics (15.2%)</strong>
+
+
+
+          <span style="color: var(--text-secondary); line-height: 1.45;">Meridional temperature gradient and polar cap heating provide secondary confirmation of adiabatic compression.</span>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- 6. 3-to-4 Day Pre-Onset Warning Horizon & Precursor Tracking Heatmap -->
+
+    <section id="forecast" class="dashboard-card">
+
+      <div class="card-header-clean">
+
+        <div>
+
+          <span class="section-step-pill">SECTION 05 ΓÇó PRECURSOR TELEMETRY &amp; MULTI-DAY EARLY WARNING</span>
+
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.2rem;">
+
+            <span class="badge-clean badge-rose">Predictive Lead Horizon</span>
+
+            <h2 class="card-title-clean">3-to-4 Day Pre-Onset SSW Trajectory &amp; Diagnostic Heatmaps</h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <p style="color: var(--text-secondary); font-size: 0.94rem; margin-bottom: 1.5rem; line-height: 1.6;">
+
+        Operational early-warning framework tracking precursor atmospheric signatures <strong>1 to 7 days before polar vortex breakdown</strong>. Scientific analysis shows that <strong>3 to 4 days prior to onset ($T-4\text{d}$ and $T-3\text{d}$)</strong>, planetary wave torque induces dramatic zonal wind deceleration and geopotential asymmetry, elevating neural sequence breakdown probability above $85\%$ before the westerly wind reversal ($U < 0$) occurs:
+
+      </p>
+
+
+
+      <!-- Event Switcher Tabs -->
+
+      <div class="horizon-header-strip">
+
+        <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted);">
+
+          Select Event Case Study:
+
+        </span>
+
+        <div class="horizon-tabs">
+
+          <button type="button" class="horizon-tab-btn active" data-event="simulated-impending">
+
+            <span class="live-pulse-dot" style="width: 7px; height: 7px;"></span> Live Impending SSW (3-Day Alert)
+
+          </button>
+
+          <button type="button" class="horizon-tab-btn" data-event="2024-01-16">
+
+            2024-01-16 (North India Cold Wave)
+
+          </button>
+
+          <button type="button" class="horizon-tab-btn" data-event="2026-03-04">
+
+            2026-03-04 (Record -60 m/s Reversal)
+
+          </button>
+
+          <button type="button" class="horizon-tab-btn" data-event="2023-02-16">
+
+            2023-02-16 (European Arctic Blast)
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Real-Time Mission Control Precursor Alert Banner -->
+
+      <div class="horizon-alert-banner">
+
+        <div class="horizon-banner-top">
+
+          <div>
+
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem;">
+
+              <span id="horizonStatusBadge" class="badge-clean badge-rose">CRITICAL WARNING</span>
+
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em;">Operational Alert Telemetry</span>
+
+            </div>
+
+            <h3 id="horizonBannerTitle" style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.25rem;">
+
+              Impending SSW Event (Live 3-Day Countdown)
+
+            </h3>
+
+            <p id="horizonBannerSubtitle" style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+
+              Current Status: T-3 Days Critical Warning ΓÇö Vortex Collapse in ~72 Hours
+
+            </p>
+
+          </div>
+
+
+
+          <div style="display: flex; gap: 0.75rem; align-items: center;">
+
+            <div style="background: var(--bg-card); padding: 0.5rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); text-align: right;">
+
+              <span style="font-size: 0.68rem; color: var(--text-muted); display: block; font-weight: 700; text-transform: uppercase;">Estimated Onset</span>
+
+              <strong id="horizonEta" style="color: var(--accent-rose); font-family: var(--font-mono); font-size: 0.98rem;">3 Days (72 hrs)</strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <div class="horizon-telemetry-grid">
+
+          <div class="horizon-telem-item">
+
+            <span class="horizon-telem-label">LSTM Confidence</span>
+
+            <span id="horizonConfidence" class="horizon-telem-val" style="color: var(--accent-emerald);">89.4%</span>
+
+          </div>
+
+          <div class="horizon-telem-item">
+
+            <span class="horizon-telem-label">Lead Detection Horizon</span>
+
+            <span class="horizon-telem-val" style="color: var(--accent-primary);">3 ΓÇô 4 Days</span>
+
+          </div>
+
+          <div class="horizon-telem-item">
+
+            <span class="horizon-telem-label">Zonal Deceleration Rate</span>
+
+            <span class="horizon-telem-val" style="color: var(--accent-rose);">-6.1 m/s/day</span>
+
+          </div>
+
+          <div class="horizon-telem-item">
+
+            <span class="horizon-telem-label">Geopotential Asymmetry</span>
+
+            <span class="horizon-telem-val" style="color: var(--accent-navy);">+92% (Wave-1)</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Part 1: Scientific Precursor Heatmap Matrix -->
+
+      <div style="margin-bottom: 2.25rem;">
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+
+          <div>
+
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
+
+              Pre-Onset Atmospheric Telemetry Heatmap (Lead Days T-7 to T0)
+
+            </h3>
+
+            <span style="font-size: 0.82rem; color: var(--text-muted);">
+
+              Tracks color-coded precursor thresholds; notice the steep gradient transition across the <strong>3ΓÇô4 Day Action Window</strong>.
+
+            </span>
+
+          </div>
+
+
+
+          <div style="display: flex; align-items: center; gap: 8px;">
+
+            <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Precursor Intensity:</span>
+
+            <div class="heatmap-legend-bar"></div>
+
+            <span style="font-size: 0.7rem; color: var(--accent-rose); font-weight: 700;">Critical Onset</span>
+
+          </div>
+
+        </div>
+
+
+
+        <div id="leadHeatmapContainer" class="heatmap-matrix-wrapper">
+
+          <!-- Dynamically populated by JS renderHeatmapMatrix() -->
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Part 2: Interactive Multi-Parameter Trajectory Graph -->
+
+      <div style="margin-bottom: 2.25rem;">
+
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem;">
+
+          <div>
+
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
+
+              Pre-Onset Atmospheric Trajectory &amp; Confidence Evolution
+
+            </h3>
+
+            <span style="font-size: 0.82rem; color: var(--text-muted);">
+
+              Dual-axis time series showing Zonal U-Wind crash, Polar Cap warming spike, and LSTM breakdown probability.
+
+            </span>
+
+          </div>
+
+          <span class="badge-clean badge-amber" style="font-size: 0.72rem;">
+
+            Actionable Window: T-4 to T-3 Days
+
+          </span>
+
+        </div>
+
+
+
+        <div style="height: 380px; position: relative; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.25rem; box-shadow: var(--shadow-sm);">
+
+          <canvas id="leadTrajectoryChart"></canvas>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Part 3: Stratosphere-to-Troposphere Downward Coupling Heatmap -->
+
+      <div style="margin-bottom: 2.25rem;">
+
+        <div style="margin-bottom: 0.75rem;">
+
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
+
+            Stratosphere-to-Troposphere Downward Coupling (10 hPa down to Surface)
+
+          </h3>
+
+          <span style="font-size: 0.82rem; color: var(--text-secondary);">
+
+            Scientific vertical cross-section demonstrating how stratospheric disturbances predicted 3ΓÇô4 days in advance propagate downward into tropospheric weather patterns over subsequent weeks (Baldwin &amp; Dunkerton 2001 coupling mechanism).
+
+          </span>
+
+        </div>
+
+
+
+        <div id="downwardCouplingContainer">
+
+          <!-- Dynamically populated by JS renderDownwardCouplingTable() -->
+
+        </div>
+
+      </div>
+
+
+
+      <!-- Part 4: Downstream Teleconnection & Societal Impact Analysis -->
+
+      <div>
+
+        <div style="margin-bottom: 0.75rem;">
+
+          <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
+
+            Subseasonal Surface Impacts &amp; Regional Teleconnections
+
+          </h3>
+
+          <span style="font-size: 0.82rem; color: var(--text-secondary);">
+
+            Identifies surface vulnerabilities triggered 1 to 3 weeks post-SSW, particularly highlighting severe cold-wave impacts in <strong>North &amp; Northwest India</strong> and mid-latitude regions:
+
+          </span>
+
+        </div>
+
+
+
+        <div id="regionalImpactsContainer">
+
+          <!-- Dynamically populated by JS renderRegionalImpactCards() -->
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- 7. Live Model Inference Sandbox -->
+
+
+
+    <section id="sandbox" class="dashboard-card">
+
+
+
+      <div class="card-header-clean">
+
+
+
+        <div>
+
+
+
+          <span class="section-step-pill">SECTION 06 ΓÇó INTERACTIVE DEMONSTRATION</span>
+
+
+
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.2rem;">
+
+
+
+            <span class="badge-clean badge-emerald">Interactive AI</span>
+
+
+
+            <h2 class="card-title-clean">Live Model Inference Sandbox &amp; Stress Test</h2>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.25rem;">
+
+
+
+        Adjust the polar stratospheric precursor inputs below or select a one-click scenario to observe how the trained neural sequence network predicts impending polar vortex breakdown:
+
+
+
+      </p>
+
+
+
+
+
+
+
+      <!-- Quick Demo Presets for Hackathon Judges -->
+
+
+
+      <div style="margin-bottom: 1.5rem;">
+
+
+
+        <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); display: block; margin-bottom: 0.6rem;">
+
+
+
+          Hackathon One-Click Scenarios:
+
+
+
+        </span>
+
+
+
+        <div class="sb-preset-container">
+
+
+
+          <button type="button" class="sb-preset-btn active" data-geo="450" data-temp="14" data-tempstd="8.5" data-vwind="6.2">
+
+
+
+            Standard Precursor (Current)
+
+
+
+          </button>
+
+
+
+          <button type="button" class="sb-preset-btn" data-geo="950" data-temp="28" data-tempstd="14.0" data-vwind="13.5">
+
+
+
+            2024 Vortex Split (Severe SSW)
+
+
+
+          </button>
+
+
+
+          <button type="button" class="sb-preset-btn" data-geo="-450" data-temp="-16" data-tempstd="3.2" data-vwind="2.1">
+
+
+
+            Deep Stable Arctic Winter (Normal)
+
+
+
+          </button>
+
+
+
+          <button type="button" class="sb-preset-btn" data-geo="320" data-temp="9" data-tempstd="6.0" data-vwind="5.0">
+
+
+
+            Marginal / Unstable Vortex
+
+
+
+          </button>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+
+
+
+        <div>
+
+
+
+          <div class="slider-control">
+
+
+
+            <div class="slider-header">
+
+
+
+              <span>Geopotential Height Anomaly:</span>
+
+
+
+              <strong id="sbGeoVal" style="color: var(--accent-primary); font-family: var(--font-mono);">+450 m┬▓/s┬▓</strong>
+
+
+
+            </div>
+
+
+
+            <input type="range" id="sbGeo" class="clean-range" min="-800" max="1200" step="25" value="450">
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div class="slider-control">
+
+
+
+            <div class="slider-header">
+
+
+
+              <span>Polar Cap Temperature Anomaly:</span>
+
+
+
+              <strong id="sbTempVal" style="color: var(--accent-rose); font-family: var(--font-mono);">+14┬░C</strong>
+
+
+
+            </div>
+
+
+
+            <input type="range" id="sbTemp" class="clean-range" min="-25" max="35" step="1" value="14">
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div class="slider-control">
+
+
+
+            <div class="slider-header">
+
+
+
+              <span>Spatial Temperature Variance (Std Dev):</span>
+
+
+
+              <strong id="sbTempStdVal" style="color: var(--accent-amber); font-family: var(--font-mono);">8.5┬░C</strong>
+
+
+
+            </div>
+
+
+
+            <input type="range" id="sbTempStd" class="clean-range" min="1.0" max="22.0" step="0.5" value="8.5">
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div class="slider-control">
+
+
+
+            <div class="slider-header">
+
+
+
+              <span>Meridional Wind Wave Amplitude (V-Wind):</span>
+
+
+
+              <strong id="sbVWindVal" style="color: var(--accent-navy); font-family: var(--font-mono);">6.2 m/s</strong>
+
+
+
+            </div>
+
+
+
+            <input type="range" id="sbVWind" class="clean-range" min="0.0" max="25.0" step="0.5" value="6.2">
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <!-- Output Prediction Panel -->
+
+
+
+        <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.75rem; text-align: center; display: flex; flex-direction: column; justify-content: center; box-shadow: var(--shadow-sm);">
+
+
+
+          <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); font-weight: 700;">
+
+
+
+            Predicted SSW Event Probability (LSTM Engine)
+
+
+
+          </span>
+
+
+
+
+
+
+
+          <div id="sbProbText" style="font-size: 3.8rem; font-weight: 800; font-family: var(--font-mono); margin: 0.4rem 0; color: var(--text-primary); letter-spacing: -0.02em;">
+
+
+
+            78%
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div style="margin-bottom: 1.25rem;">
+
+
+
+            <span id="sbStatusPill" class="badge-clean badge-rose">
+
+
+
+              HIGH RISK: SSW POLAR BREAKDOWN LIKELY
+
+
+
+            </span>
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div style="width: 100%; height: 10px; background: var(--bg-card); border-radius: var(--radius-full); overflow: hidden; margin-bottom: 1.5rem; border: 1px solid var(--border-light);">
+
+
+
+            <div id="sbProbBar" style="width: 78%; height: 100%; background: var(--accent-primary); transition: all 0.2s ease;"></div>
+
+
+
+          </div>
+
+
+
+
+
+
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; font-size: 0.85rem; text-align: left;">
+
+
+
+            <div style="background: var(--bg-card); padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+
+
+
+              <span style="color: var(--text-muted); font-size: 0.72rem; display: block; font-weight: 600;">RANDOM FOREST OUTPUT</span>
+
+
+
+              <strong id="sbRfProb" style="color: var(--accent-primary); font-family: var(--font-mono); font-size: 1.15rem;">45%</strong>
+
+
+
+            </div>
+
+
+
+            <div style="background: var(--bg-card); padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+
+
+
+              <span style="color: var(--text-muted); font-size: 0.72rem; display: block; font-weight: 600;">EARLY WARNING LEAD</span>
+
+
+
+              <strong style="color: var(--accent-amber); font-family: var(--font-mono); font-size: 1.15rem;">7 ΓÇô 14 Days</strong>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+
+
+
+  </main>
+
+
+
+
+
+
+
+  <!-- Footer -->
+
+
+
+  <footer>
+
+
+
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
+
+
+
+      <div>
+
+
+
+        <strong style="color: var(--text-primary); font-size: 0.95rem;">STRATOWATCH ΓÇö Sudden Stratospheric Warming Early Warning System</strong><br>
+
+
+
+        <span style="color: var(--text-secondary);">Developed by Team CipheI / AtmosAI ΓÇó Department of AI &amp; ML, PCCOE Pune</span>
+
+
+
+      </div>
+
+
+
+      <div style="font-size: 0.82rem; color: var(--text-muted); text-align: right;">
+
+
+
+        ECMWF ERA5 Satellite Atmospheric Reanalysis (10 hPa) ΓÇó TensorFlow / Keras ΓÇó Scikit-Learn
+
+
+
+      </div>
+
+
+
+    </div>
+
+
+
+  </footer>
+
+
+
+
+
+
+
+  <!-- Scripts -->
+
+
+
+  <script src="assets/js/scientific-data.js"></script>
+
+
+
+  <script src="assets/js/main.js"></script>
+
+
+
+  <script src="assets/js/scientific-charts.js"></script>
+
+
+
+</body>
+
+
+
+</html>
+
+
+

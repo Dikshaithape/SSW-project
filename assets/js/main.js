@@ -12,35 +12,56 @@ document.addEventListener("DOMContentLoaded", () => {
   localStorage.removeItem("polarwatch_theme_preset");
 
   // 2. Active Navigation Highlight on Scroll
-  const navLinks = document.querySelectorAll(".nav-link");
+  const navLinks = document.querySelectorAll(".nav-link, .sub-nav-link");
   const sections = document.querySelectorAll("section[id], header[id]");
 
   window.addEventListener("scroll", () => {
     let current = "";
     sections.forEach(section => {
-      const sectionTop = section.offsetTop - 120;
+      const sectionTop = section.offsetTop - 140;
       if (window.scrollY >= sectionTop) {
         current = section.getAttribute("id");
       }
     });
 
     navLinks.forEach(link => {
-      link.classList.remove("active");
-      if (link.getAttribute("href") === `#${current}`) {
-        link.classList.add("active");
+      const href = link.getAttribute("href");
+      if (href && href.startsWith("#")) {
+        link.classList.remove("active");
+        if (href === `#${current}`) {
+          link.classList.add("active");
+        }
       }
     });
   });
 
-  // 3. Render KaTeX equations if available
+  // 3. Smart Cross-Page Navigation
+  document.querySelectorAll('a[href="/science"], a[href="science.html"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      if (window.location.protocol === 'file:') {
+        e.preventDefault();
+        window.location.href = 'science.html';
+      }
+    });
+  });
+  document.querySelectorAll('a[href="/"], a[href="index.html"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      if (window.location.protocol === 'file:') {
+        e.preventDefault();
+        window.location.href = 'index.html';
+      }
+    });
+  });
+
+  // 4. Render KaTeX equations if available
   if (window.renderMathInElement) {
     try {
       window.renderMathInElement(document.body, {
         delimiters: [
           { left: "$$", right: "$$", display: true },
           { left: "$", right: "$", display: false },
-          { left: "\[", right: "\]", display: true },
-          { left: "\(", right: "\)", display: false }
+          { left: "\\[", right: "\\]", display: true },
+          { left: "\\(", right: "\\)", display: false }
         ],
         throwOnError: false
       });
