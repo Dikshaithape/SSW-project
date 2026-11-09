@@ -1,5 +1,5 @@
 /**
- * PolarWatch AI — Scientific Analytics Engine Main Script
+ * STRATOWATCH — Scientific Analytics Engine Main Script
  * Team CipheI / PCCOE Pune
  * Tanmay Joshi (125B1C170)
  */
@@ -7,14 +7,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   // 1. Multi-Theme Preset Controller
   const themeBtns = document.querySelectorAll(".theme-pill-btn");
-  const savedTheme = localStorage.getItem("polarwatch_theme_preset") || "theme-editorial";
+  const savedTheme = localStorage.getItem("stratowatch_theme_preset") || "theme-editorial";
 
   function applyTheme(themeName) {
     document.body.classList.remove("theme-editorial", "theme-forest", "theme-obsidian");
     if (themeName !== "theme-editorial") {
       document.body.classList.add(themeName);
     }
-    localStorage.setItem("polarwatch_theme_preset", themeName);
+    localStorage.setItem("stratowatch_theme_preset", themeName);
 
     themeBtns.forEach(btn => {
       if (btn.getAttribute("data-theme") === themeName) {

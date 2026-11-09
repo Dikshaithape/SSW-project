@@ -7,7 +7,7 @@
 const SCIENTIFIC_DATA = {
   project: {
     title: "Random Forest & LSTM Based Prediction of Stratospheric Sudden Warming (SSW) Events in the Northern Polar Region",
-    shortTitle: "PolarWatch AI / SSW Research Analysis",
+    shortTitle: "STRATOWATCH / SSW Research Analysis",
     authors: [
       { name: "Diksha Ithape", id: "125B1C171", email: "diksha.ithape25@pccoepune.org" },
       { name: "Aryan Patil", id: "125B1C032", email: "aryan.patil25@pccoepune.org" },

@@ -1,6 +1,6 @@
 /**
 
- * PolarWatch AI — Scientific Analytics Engine & Interactive Charts
+ * STRATOWATCH — Scientific Analytics Engine & Interactive Charts
 
  * Team CipheI / PCCOE Pune
 
