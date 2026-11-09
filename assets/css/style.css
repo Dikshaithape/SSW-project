@@ -73,114 +73,6 @@
   --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Preset 2: Forest & Sandstone (Geophysical Earth) */
-body.theme-forest {
-  --bg-app: #081c15;
-  --bg-card: #0f2c24;
-  --bg-card-subtle: #173e33;
-  --bg-card-hover: #1e4e40;
-  --bg-input: #081c15;
-
-  --border-light: rgba(167, 243, 208, 0.16);
-  --border-focus: #10b981;
-  --border-accent: rgba(16, 185, 129, 0.4);
-
-  --text-primary: #ecfdf5;
-  --text-secondary: #a7f3d0;
-  --text-muted: #6ee7b7;
-  --text-brand: #34d399;
-
-  --accent-primary: #f59e0b;
-  --accent-primary-subtle: rgba(245, 158, 11, 0.15);
-  --accent-navy: #38bdf8;
-  --accent-navy-subtle: rgba(56, 189, 248, 0.15);
-  --accent-emerald: #10b981;
-  --accent-emerald-subtle: rgba(16, 185, 129, 0.15);
-  --accent-amber: #fbbf24;
-  --accent-amber-subtle: rgba(251, 191, 36, 0.15);
-  --accent-rose: #f87171;
-  --accent-rose-subtle: rgba(248, 113, 113, 0.15);
-
-  --box-auc-bg: rgba(245, 158, 11, 0.12);
-  --box-auc-border: rgba(245, 158, 11, 0.35);
-  --box-auc-accent: #fbbf24;
-
-  --box-rec-bg: rgba(16, 185, 129, 0.14);
-  --box-rec-border: rgba(16, 185, 129, 0.35);
-  --box-rec-accent: #34d399;
-
-  --box-scope-bg: rgba(56, 189, 248, 0.12);
-  --box-scope-border: rgba(56, 189, 248, 0.35);
-  --box-scope-accent: #38bdf8;
-
-  --box-base-bg: rgba(148, 163, 184, 0.1);
-  --box-base-border: rgba(148, 163, 184, 0.28);
-  --box-base-accent: #94a3b8;
-
-  --table-head-bg: #14352b;
-  --table-stripe-bg: #0c241d;
-  --table-border: rgba(167, 243, 208, 0.18);
-  --table-hover-bg: #194639;
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --shadow-card-hover: 0 12px 28px -4px rgba(16, 185, 129, 0.2);
-}
-
-/* Preset 3: Deep Obsidian & Charcoal Dark */
-body.theme-obsidian {
-  --bg-app: #121214;
-  --bg-card: #1a1a1e;
-  --bg-card-subtle: #232328;
-  --bg-card-hover: #2b2b32;
-  --bg-input: #121214;
-
-  --border-light: #2e2e36;
-  --border-focus: #ea580c;
-  --border-accent: rgba(234, 88, 12, 0.4);
-
-  --text-primary: #f4f4f5;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
-  --text-brand: #ea580c;
-
-  --accent-primary: #ea580c;
-  --accent-primary-subtle: rgba(234, 88, 12, 0.18);
-  --accent-navy: #60a5fa;
-  --accent-navy-subtle: rgba(96, 165, 250, 0.15);
-  --accent-emerald: #34d399;
-  --accent-emerald-subtle: rgba(52, 211, 153, 0.15);
-  --accent-amber: #fbbf24;
-  --accent-amber-subtle: rgba(251, 191, 36, 0.15);
-  --accent-rose: #fb7185;
-  --accent-rose-subtle: rgba(251, 113, 133, 0.18);
-
-  --box-auc-bg: rgba(234, 88, 12, 0.12);
-  --box-auc-border: rgba(234, 88, 12, 0.35);
-  --box-auc-accent: #fb923c;
-
-  --box-rec-bg: rgba(52, 211, 153, 0.12);
-  --box-rec-border: rgba(52, 211, 153, 0.35);
-  --box-rec-accent: #6ee7b7;
-
-  --box-scope-bg: rgba(96, 165, 250, 0.12);
-  --box-scope-border: rgba(96, 165, 250, 0.35);
-  --box-scope-accent: #93c5fd;
-
-  --box-base-bg: rgba(148, 163, 184, 0.08);
-  --box-base-border: rgba(148, 163, 184, 0.25);
-  --box-base-accent: #94a3b8;
-
-  --table-head-bg: #222228;
-  --table-stripe-bg: #18181c;
-  --table-border: #2e2e38;
-  --table-hover-bg: #292932;
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5);
-  --shadow-card-hover: 0 12px 28px -4px rgba(234, 88, 12, 0.22);
-}
-
 /* Base Reset */
 * {
   margin: 0;
@@ -797,16 +689,16 @@ a:hover {
 }
 
 .badge-blue { background: var(--accent-navy-subtle); color: var(--accent-navy); border: 1px solid rgba(30, 58, 138, 0.2); }
-body.theme-forest .badge-blue, body.theme-obsidian .badge-blue { color: #60a5fa; border-color: rgba(96, 165, 250, 0.3); }
+
 
 .badge-green { background: var(--accent-emerald-subtle); color: var(--accent-emerald); border: 1px solid rgba(21, 128, 61, 0.2); }
-body.theme-forest .badge-green, body.theme-obsidian .badge-green { color: #34d399; border-color: rgba(52, 211, 153, 0.3); }
+
 
 .badge-amber { background: var(--accent-amber-subtle); color: var(--accent-amber); border: 1px solid rgba(180, 83, 9, 0.2); }
-body.theme-forest .badge-amber, body.theme-obsidian .badge-amber { color: #fbbf24; border-color: rgba(251, 191, 36, 0.3); }
+
 
 .badge-rose { background: var(--accent-rose-subtle); color: var(--accent-rose); border: 1px solid rgba(190, 18, 60, 0.2); }
-body.theme-forest .badge-rose, body.theme-obsidian .badge-rose { color: #f87171; border-color: rgba(248, 113, 113, 0.3); }
+
 
 /* ===================================================================
    4. ENHANCED CONFUSION MATRIX (Hackathon Evaluation View)
@@ -865,20 +757,20 @@ body.theme-forest .badge-rose, body.theme-obsidian .badge-rose { color: #f87171;
 }
 
 .cm-tn-clean { background: rgba(30, 58, 138, 0.12); color: #1e3a8a; }
-body.theme-forest .cm-tn-clean { background: rgba(56, 189, 248, 0.18); color: #7dd3fc; }
-body.theme-obsidian .cm-tn-clean { background: rgba(96, 165, 250, 0.18); color: #93c5fd; }
+
+
 
 .cm-fp-clean { background: rgba(180, 83, 9, 0.12); color: #b45309; }
-body.theme-forest .cm-fp-clean { background: rgba(251, 191, 36, 0.18); color: #fde047; }
-body.theme-obsidian .cm-fp-clean { background: rgba(251, 191, 36, 0.18); color: #fde047; }
+
+
 
 .cm-fn-clean { background: rgba(190, 18, 60, 0.12); color: #be123c; }
-body.theme-forest .cm-fn-clean { background: rgba(248, 113, 113, 0.18); color: #fca5a5; }
-body.theme-obsidian .cm-fn-clean { background: rgba(251, 113, 133, 0.18); color: #fda4af; }
+
+
 
 .cm-tp-clean { background: rgba(21, 128, 61, 0.15); color: #15803d; }
-body.theme-forest .cm-tp-clean { background: rgba(16, 185, 129, 0.22); color: #6ee7b7; }
-body.theme-obsidian .cm-tp-clean { background: rgba(52, 211, 153, 0.22); color: #6ee7b7; }
+
+
 
 /* ===================================================================
    5. LIVE INFERENCE SANDBOX (Hackathon Demo Controls)
